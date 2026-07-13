@@ -5,253 +5,329 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>المعلمة رشا حسن | منصة تعليمية</title>
 
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-  :root{
-    --dark:#2c3e50;
-    --blue:#3498db;
-    --gray:#ecf0f1;
-    --white:#ffffff;
-    --danger:#e74c3c;
+  :root {
+    --dark: #2c3e50;
+    --blue: #3498db;
+    --gray: #ecf0f1;
+    --white: #ffffff;
+    --danger: #e74c3c;
     --shadow: 0 4px 14px rgba(44,62,80,.10);
   }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-
-  body{
-    font-family:'Cairo', sans-serif;
-    background:var(--gray);
-    color:var(--dark);
-    line-height:1.6;
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--gray);
+    color: var(--dark);
+    line-height: 1.6;
   }
-
-  a{text-decoration:none;color:inherit;}
-  button{font-family:'Cairo', sans-serif;cursor:pointer;border:none;}
-
-  /* ===== Header ===== */
-  header{
-    background:var(--dark);
-    color:var(--white);
-    padding:16px 20px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:sticky;
-    top:0;
-    z-index:100;
-    box-shadow:var(--shadow);
+  button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; }
+  
+  header {
+    background: var(--dark);
+    color: var(--white);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
   }
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-weight:800;
-    font-size:1.3rem;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.3rem;
   }
-  .brand i{color:var(--blue);font-size:1.5rem;}
-
-  .header-actions{display:flex;gap:10px;align-items:center;}
-
-  .btn{
-    padding:10px 18px;
-    border-radius:8px;
-    font-weight:600;
-    font-size:.95rem;
-    transition:.2s;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
+  .brand i { color: var(--blue); font-size: 1.5rem; }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+  
+  .btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: .95rem;
+    transition: .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
   }
-  .btn-primary{background:var(--blue);color:var(--white);}
-  .btn-primary:hover{background:#2f85bd;}
-  .btn-outline{background:transparent;border:2px solid var(--white);color:var(--white);}
-  .btn-outline:hover{background:rgba(255,255,255,.12);}
-  .btn-danger{background:var(--danger);color:var(--white);}
-  .btn-danger:hover{background:#c0392b;}
-  .btn-gray{background:#bdc3c7;color:var(--dark);}
-  .btn-gray:hover{background:#a9b1b4;}
-  .btn-sm{padding:6px 12px;font-size:.85rem;border-radius:6px;}
-
-  /* ===== Container ===== */
-  .container{max-width:1100px;margin:0 auto;padding:24px 16px 60px;}
-
-  /* ===== Search ===== */
-  .search-wrap{
-    position:relative;
-    margin-bottom:26px;
+  .btn-primary { background: var(--blue); color: var(--white); }
+  .btn-primary:hover { background: #2f85bd; }
+  .btn-outline { background: transparent; border: 2px solid var(--white); color: var(--white); }
+  .btn-outline:hover { background: rgba(255,255,255,.12); }
+  .btn-danger { background: var(--danger); color: var(--white); }
+  .btn-danger:hover { background: #c0392b; }
+  .btn-gray { background: #bdc3c7; color: var(--dark); }
+  .btn-gray:hover { background: #a9b1b4; }
+  .btn-sm { padding: 6px 12px; font-size: .85rem; border-radius: 6px; }
+  
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+  
+  .search-wrap {
+    position: relative;
+    margin-bottom: 26px;
   }
-  .search-wrap i{
-    position:absolute;
-    top:50%;right:18px;
-    transform:translateY(-50%);
-    color:#95a5a6;
+  .search-wrap i {
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+    color: #95a5a6;
   }
-  #searchInput{
-    width:100%;
-    padding:14px 46px 14px 16px;
-    border-radius:12px;
-    border:none;
-    font-family:'Cairo', sans-serif;
-    font-size:1rem;
-    box-shadow:var(--shadow);
-    background:var(--white);
+  #searchInput {
+    width: 100%;
+    padding: 14px 46px 14px 16px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    box-shadow: var(--shadow);
+    background: var(--white);
   }
-  #searchInput:focus{outline:2px solid var(--blue);}
-
-  /* ===== Sections Grid ===== */
-  #sectionsView h2, #adminView h2{
-    margin-bottom:16px;
-    color:var(--dark);
-    font-weight:800;
+  #searchInput:focus { outline: 2px solid var(--blue); }
+  
+  #sectionsView h2, #adminView h2 {
+    margin-bottom: 16px;
+    color: var(--dark);
+    font-weight: 800;
   }
-
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(230px,1fr));
-    gap:18px;
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
   }
-
-  .section-card{
-    background:var(--white);
-    border-radius:14px;
-    padding:22px;
-    box-shadow:var(--shadow);
-    cursor:pointer;
-    transition:.2s;
-    border-top:4px solid var(--blue);
+  
+  .section-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: .2s;
+    border-top: 4px solid var(--blue);
   }
-  .section-card:hover{transform:translateY(-4px);box-shadow:0 8px 22px rgba(44,62,80,.16);}
-  .section-card i{font-size:1.8rem;color:var(--blue);margin-bottom:10px;}
-  .section-card h3{font-size:1.15rem;margin-bottom:6px;}
-  .section-card span{color:#7f8c8d;font-size:.9rem;}
-
-  /* ===== Lessons view ===== */
-  #lessonsView{display:none;}
-  .back-btn{
-    display:inline-flex;align-items:center;gap:8px;
-    margin-bottom:18px;color:var(--blue);font-weight:700;
+  .section-card:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(44,62,80,.16); }
+  .section-card i { font-size: 1.8rem; color: var(--blue); margin-bottom: 10px; }
+  .section-card h3 { font-size: 1.15rem; margin-bottom: 6px; }
+  .section-card span { color: #7f8c8d; font-size: .9rem; }
+  
+  #lessonsView { display: none; }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
   }
-
-  .lesson-card{
-    background:var(--white);
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    margin-bottom:22px;
-    overflow:hidden;
+  
+  .lesson-card {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 22px;
+    overflow: hidden;
   }
-  .lesson-video{position:relative;width:100%;padding-top:56.25%;background:#000;}
-  .lesson-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
-  .lesson-body{padding:18px 20px;}
-  .lesson-body h3{margin-bottom:8px;font-size:1.1rem;}
-  .lesson-body p{color:#5d6d7e;margin-bottom:12px;font-size:.95rem;}
-  .lesson-meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
-  .lesson-stats{display:flex;gap:16px;color:#7f8c8d;font-size:.9rem;}
-  .lesson-stats i{color:var(--blue);margin-left:5px;}
-
-  /* ===== Loading / empty ===== */
-  .spinner-wrap{display:flex;flex-direction:column;align-items:center;padding:60px 0;color:#7f8c8d;}
-  .spinner{
-    width:42px;height:42px;border-radius:50%;
-    border:4px solid #d6dbdf;border-top-color:var(--blue);
-    animation:spin 0.8s linear infinite;margin-bottom:14px;
+  .lesson-video {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #000;
   }
-  @keyframes spin{to{transform:rotate(360deg);}}
-  .empty-state{text-align:center;padding:50px 0;color:#95a5a6;}
-  .empty-state i{font-size:2.4rem;margin-bottom:12px;color:#bdc3c7;}
-
-  /* ===== Modal ===== */
-  .modal-overlay{
-    display:none;
-    position:fixed;inset:0;
-    background:rgba(44,62,80,.55);
-    z-index:1000;
-    align-items:center;justify-content:center;
-    padding:16px;
+  .lesson-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
-  .modal-overlay.active{display:flex;}
-  .modal{
-    background:var(--white);
-    border-radius:16px;
-    width:100%;max-width:420px;
-    padding:26px;
-    max-height:90vh;
-    overflow-y:auto;
-    box-shadow:0 12px 34px rgba(0,0,0,.25);
+  .lesson-body { padding: 18px 20px; }
+  .lesson-body h3 { margin-bottom: 8px; font-size: 1.1rem; }
+  .lesson-body p { color: #5d6d7e; margin-bottom: 12px; font-size: .95rem; }
+  .lesson-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
-  .modal h3{margin-bottom:18px;color:var(--dark);display:flex;align-items:center;gap:10px;}
-  .field{margin-bottom:14px;}
-  .field label{display:block;margin-bottom:6px;font-weight:600;font-size:.9rem;color:var(--dark);}
-  .field input, .field textarea, .field select{
-    width:100%;
-    padding:11px 13px;
-    border:1px solid #dfe4e6;
-    border-radius:8px;
-    font-family:'Cairo', sans-serif;
-    font-size:.95rem;
+  .lesson-stats {
+    display: flex;
+    gap: 16px;
+    color: #7f8c8d;
+    font-size: .9rem;
   }
-  .field input:focus, .field textarea:focus, .field select:focus{outline:2px solid var(--blue);border-color:var(--blue);}
-  .field textarea{resize:vertical;min-height:70px;}
-  .modal-actions{display:flex;gap:10px;margin-top:18px;}
-  .modal-actions .btn{flex:1;justify-content:center;}
-  .close-modal{position:absolute;left:16px;top:14px;font-size:1.2rem;color:#95a5a6;background:none;}
-  .modal{position:relative;}
-
-  .error-msg{
-    background:#fdecea;color:var(--danger);
-    padding:10px 12px;border-radius:8px;
-    font-size:.87rem;margin-bottom:12px;
-    display:none;align-items:center;gap:8px;
+  .lesson-stats i { color: var(--blue); margin-left: 5px; }
+  
+  .spinner-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0;
+    color: #7f8c8d;
   }
-  .error-msg.active{display:flex;}
-  .success-toast{
-    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-    background:var(--dark);color:var(--white);
-    padding:12px 22px;border-radius:10px;
-    display:flex;align-items:center;gap:10px;
-    z-index:2000;box-shadow:var(--shadow);
-    opacity:0;pointer-events:none;transition:.3s;
-    font-size:.9rem;
+  .spinner {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 4px solid #d6dbdf;
+    border-top-color: var(--blue);
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 14px;
   }
-  .success-toast.show{opacity:1;bottom:34px;}
-  .success-toast i{color:#2ecc71;}
-
-  /* ===== Admin panel ===== */
-  #adminView{display:none;}
-  .admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
-  .admin-table-wrap{background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:18px;margin-bottom:22px;}
-  .admin-table-wrap h3{margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-  .admin-row{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:12px 6px;border-bottom:1px solid #eef0f1;gap:10px;flex-wrap:wrap;
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty-state {
+    text-align: center;
+    padding: 50px 0;
+    color: #95a5a6;
   }
-  .admin-row:last-child{border-bottom:none;}
-  .admin-row .info{flex:1;min-width:150px;}
-  .admin-row .info strong{display:block;}
-  .admin-row .info small{color:#95a5a6;}
-  .admin-row .actions{display:flex;gap:8px;}
-
-  .login-hint{color:rgba(255,255,255,.75);font-size:.8rem;}
-
-  footer{
-    text-align:center;padding:22px;color:#95a5a6;font-size:.85rem;
+  .empty-state i { font-size: 2.4rem; margin-bottom: 12px; color: #bdc3c7; }
+  
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(44,62,80,.55);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
   }
-
-  @media(max-width:560px){
-    .brand span{display:none;}
-    header{padding:14px 14px;}
-    .container{padding:18px 12px 50px;}
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    padding: 26px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 12px 34px rgba(0,0,0,.25);
+    position: relative;
+  }
+  .modal h3 { margin-bottom: 18px; color: var(--dark); display: flex; align-items: center; gap: 10px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; margin-bottom: 6px; font-weight: 600; font-size: .9rem; color: var(--dark); }
+  .field input, .field textarea, .field select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #dfe4e6;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: .95rem;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: 2px solid var(--blue);
+    border-color: var(--blue);
+  }
+  .field textarea { resize: vertical; min-height: 70px; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .modal-actions .btn { flex: 1; justify-content: center; }
+  .close-modal {
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    font-size: 1.2rem;
+    color: #95a5a6;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .error-msg {
+    background: #fdecea;
+    color: var(--danger);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: .87rem;
+    margin-bottom: 12px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+  }
+  .error-msg.active { display: flex; }
+  .success-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark);
+    color: var(--white);
+    padding: 12px 22px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 2000;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    font-size: .9rem;
+  }
+  .success-toast.show { opacity: 1; bottom: 34px; }
+  .success-toast i { color: #2ecc71; }
+  
+  #adminView { display: none; }
+  .admin-toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .admin-table-wrap {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 18px;
+    margin-bottom: 22px;
+  }
+  .admin-table-wrap h3 {
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .admin-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 6px;
+    border-bottom: 1px solid #eef0f1;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .admin-row:last-child { border-bottom: none; }
+  .admin-row .info { flex: 1; min-width: 150px; }
+  .admin-row .info strong { display: block; }
+  .admin-row .info small { color: #95a5a6; }
+  .admin-row .actions { display: flex; gap: 8px; }
+  
+  footer {
+    text-align: center;
+    padding: 22px;
+    color: #95a5a6;
+    font-size: .85rem;
+  }
+  
+  @media(max-width:560px) {
+    .brand span { display: none; }
+    header { padding: 14px 14px; }
+    .container { padding: 18px 12px 50px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ===================== Header ===================== -->
 <header>
   <div class="brand"><i class="fa-solid fa-chalkboard-user"></i><span>المعلمة رشا حسن</span></div>
   <div class="header-actions">
@@ -269,7 +345,7 @@
 
 <div class="container">
 
-  <!-- ===================== Public: Sections View ===================== -->
+  <!-- Sections View -->
   <div id="sectionsView">
     <div class="search-wrap">
       <input type="text" id="searchInput" placeholder="ابحث عن قسم أو درس...">
@@ -284,7 +360,7 @@
     </div>
   </div>
 
-  <!-- ===================== Public: Lessons View ===================== -->
+  <!-- Lessons View -->
   <div id="lessonsView">
     <div class="back-btn" id="backToSections"><i class="fa-solid fa-arrow-right"></i> رجوع إلى الأقسام</div>
     <h2 id="currentSectionTitle"></h2>
@@ -295,20 +371,17 @@
     </div>
   </div>
 
-  <!-- ===================== Admin Panel ===================== -->
+  <!-- Admin View -->
   <div id="adminView">
     <h2><i class="fa-solid fa-gauge"></i> لوحة تحكم المدير</h2>
-
     <div class="admin-toolbar">
       <button class="btn btn-primary" id="openAddSection"><i class="fa-solid fa-folder-plus"></i> إضافة قسم</button>
       <button class="btn btn-primary" id="openAddLesson"><i class="fa-solid fa-video"></i> إضافة درس</button>
     </div>
-
     <div class="admin-table-wrap">
       <h3><i class="fa-solid fa-layer-group"></i> الأقسام</h3>
       <div id="adminSectionsList"></div>
     </div>
-
     <div class="admin-table-wrap">
       <h3><i class="fa-solid fa-video"></i> الدروس</h3>
       <div id="adminLessonsList"></div>
@@ -319,7 +392,7 @@
 
 <footer>© <span id="year"></span> المعلمة رشا حسن — جميع الحقوق محفوظة</footer>
 
-<!-- ===================== Modal: Login ===================== -->
+<!-- Modals -->
 <div class="modal-overlay" id="loginModal">
   <div class="modal">
     <button class="close-modal" data-close="loginModal"><i class="fa-solid fa-xmark"></i></button>
@@ -341,7 +414,6 @@
   </div>
 </div>
 
-<!-- ===================== Modal: Add/Edit Section ===================== -->
 <div class="modal-overlay" id="sectionModal">
   <div class="modal">
     <button class="close-modal" data-close="sectionModal"><i class="fa-solid fa-xmark"></i></button>
@@ -360,7 +432,6 @@
   </div>
 </div>
 
-<!-- ===================== Modal: Add/Edit Lesson ===================== -->
 <div class="modal-overlay" id="lessonModal">
   <div class="modal">
     <button class="close-modal" data-close="lessonModal"><i class="fa-solid fa-xmark"></i></button>
@@ -391,7 +462,6 @@
   </div>
 </div>
 
-<!-- ===================== Modal: Confirm Delete ===================== -->
 <div class="modal-overlay" id="confirmModal">
   <div class="modal">
     <h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);"></i> تأكيد الحذف</h3>
@@ -407,15 +477,12 @@
 
 <div class="success-toast" id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastText"></span></div>
 
-<!-- ===================== Firebase SDK (compat) ===================== -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-/* =========================================================================
-   ✅ قيم Firebase الخاصة بمشروعك
-   ========================================================================= */
+// ✅ Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAU1pFvv6PAefLeYnOq-0JmhuMqPmrCPEU",
   authDomain: "rashahasa-abbc7.firebaseapp.com",
@@ -423,95 +490,103 @@ const firebaseConfig = {
   projectId: "rashahasa-abbc7",
   storageBucket: "rashahasa-abbc7.firebasestorage.app",
   messagingSenderId: "395302727443",
-  appId: "1:395302727443:web:dd9864195c6e3775a5f4e6",
-  measurementId: "G-CV4KMFKWXB"
+  appId: "1:395302727443:web:dd9864195c6e3775a5f4e6"
 };
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
-/* ============================ State ============================ */
-let sections = {};   // sectionId -> {name, createdAt}
-let lessons = {};    // lessonId  -> {sectionId, title, youtubeUrl, description, createdAt, views}
+// State
+let sections = {};
+let lessons = {};
 let currentSectionId = null;
 let isAdmin = false;
-let pendingDelete = null; // {type:'section'|'lesson', id}
+let pendingDelete = null;
 
-/* ============================ Helpers ============================ */
-function showToast(msg){
+// Helpers
+function showToast(msg) {
   const toast = document.getElementById('toast');
   document.getElementById('toastText').textContent = msg;
   toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'), 2600);
+  setTimeout(() => toast.classList.remove('show'), 2600);
 }
 
-function openModal(id){ document.getElementById(id).classList.add('active'); }
-function closeModal(id){
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) {
   document.getElementById(id).classList.remove('active');
   const err = document.getElementById(id).querySelector('.error-msg');
-  if(err) err.classList.remove('active');
+  if (err) err.classList.remove('active');
 }
-document.querySelectorAll('[data-close]').forEach(btn=>{
-  btn.addEventListener('click', ()=>closeModal(btn.dataset.close));
+
+document.querySelectorAll('[data-close]').forEach(btn => {
+  btn.addEventListener('click', () => closeModal(btn.dataset.close));
 });
-document.querySelectorAll('.modal-overlay').forEach(overlay=>{
-  overlay.addEventListener('click', (e)=>{
-    if(e.target === overlay) closeModal(overlay.id);
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal(overlay.id);
   });
 });
 
-function showFieldError(modalId, text){
-  const box = document.querySelector('#'+modalId+' .error-msg');
+function showFieldError(modalId, text) {
+  const box = document.querySelector('#' + modalId + ' .error-msg');
   box.querySelector('span').textContent = text;
   box.classList.add('active');
 }
 
-// استخراج معرف فيديو يوتيوب من أي صيغة رابط
-function extractYoutubeId(url){
-  if(!url) return null;
+function extractYoutubeId(url) {
+  if (!url) return null;
   const patterns = [
     /youtu\.be\/([a-zA-Z0-9_-]{11})/,
     /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
     /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
     /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
   ];
-  for(const p of patterns){
+  for (const p of patterns) {
     const m = url.match(p);
-    if(m) return m[1];
+    if (m) return m[1];
   }
   return null;
 }
 
-function isValidEmail(email){
+function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-/* ============================ Realtime Data Loading ============================ */
-const sectionsLoading = document.getElementById('sectionsLoading');
+function escapeHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
 
-db.ref('sections').on('value', (snap)=>{
+// Load data
+db.ref('sections').on('value', (snap) => {
   sections = snap.val() || {};
-  sectionsLoading.style.display = 'none';
+  document.getElementById('sectionsLoading').style.display = 'none';
   renderSectionsGrid();
   populateSectionSelect();
-  if(isAdmin) renderAdminSections();
-  if(currentSectionId) renderLessonsForSection(currentSectionId);
+  if (isAdmin) renderAdminSections();
+  if (currentSectionId) renderLessonsForSection(currentSectionId);
+}, (error) => {
+  console.error('Error loading sections:', error);
+  document.getElementById('sectionsLoading').innerHTML = '❌ حدث خطأ في تحميل البيانات';
 });
 
-db.ref('lessons').on('value', (snap)=>{
+db.ref('lessons').on('value', (snap) => {
   lessons = snap.val() || {};
   renderSectionsGrid();
-  if(isAdmin) renderAdminLessons();
-  if(currentSectionId) renderLessonsForSection(currentSectionId);
+  if (isAdmin) renderAdminLessons();
+  if (currentSectionId) renderLessonsForSection(currentSectionId);
+}, (error) => {
+  console.error('Error loading lessons:', error);
 });
 
-/* ============================ Public: Sections Grid ============================ */
-function lessonCountForSection(sectionId){
+function lessonCountForSection(sectionId) {
   return Object.values(lessons).filter(l => l.sectionId === sectionId).length;
 }
 
-function renderSectionsGrid(filterText){
+function renderSectionsGrid(filterText) {
   const grid = document.getElementById('sectionsGrid');
   const emptyEl = document.getElementById('sectionsEmpty');
   grid.innerHTML = '';
@@ -519,21 +594,20 @@ function renderSectionsGrid(filterText){
   const term = (filterText || '').trim().toLowerCase();
   const ids = Object.keys(sections);
 
-  const visibleIds = ids.filter(id=>{
-    if(!term) return true;
+  const visibleIds = ids.filter(id => {
+    if (!term) return true;
     const sec = sections[id];
-    if(sec.name && sec.name.toLowerCase().includes(term)) return true;
-    // ابحث أيضًا في عناوين الدروس التابعة لهذا القسم
-    return Object.values(lessons).some(l => l.sectionId===id && l.title && l.title.toLowerCase().includes(term));
+    if (sec.name && sec.name.toLowerCase().includes(term)) return true;
+    return Object.values(lessons).some(l => l.sectionId === id && l.title && l.title.toLowerCase().includes(term));
   });
 
-  if(visibleIds.length === 0){
+  if (visibleIds.length === 0) {
     emptyEl.style.display = 'block';
     return;
   }
   emptyEl.style.display = 'none';
 
-  visibleIds.forEach(id=>{
+  visibleIds.forEach(id => {
     const sec = sections[id];
     const count = lessonCountForSection(id);
     const card = document.createElement('div');
@@ -543,23 +617,16 @@ function renderSectionsGrid(filterText){
       <h3>${escapeHtml(sec.name || '')}</h3>
       <span><i class="fa-solid fa-video"></i> ${count} درس</span>
     `;
-    card.addEventListener('click', ()=>openSection(id));
+    card.addEventListener('click', () => openSection(id));
     grid.appendChild(card);
   });
 }
 
-function escapeHtml(str){
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
-
-document.getElementById('searchInput').addEventListener('input', (e)=>{
+document.getElementById('searchInput').addEventListener('input', (e) => {
   renderSectionsGrid(e.target.value);
 });
 
-/* ============================ Public: Lessons View ============================ */
-function openSection(sectionId){
+function openSection(sectionId) {
   currentSectionId = sectionId;
   document.getElementById('sectionsView').style.display = 'none';
   document.getElementById('lessonsView').style.display = 'block';
@@ -567,28 +634,28 @@ function openSection(sectionId){
   renderLessonsForSection(sectionId);
 }
 
-document.getElementById('backToSections').addEventListener('click', ()=>{
+document.getElementById('backToSections').addEventListener('click', () => {
   currentSectionId = null;
   document.getElementById('lessonsView').style.display = 'none';
   document.getElementById('sectionsView').style.display = 'block';
 });
 
-function renderLessonsForSection(sectionId){
+function renderLessonsForSection(sectionId) {
   const list = document.getElementById('lessonsList');
   const emptyEl = document.getElementById('lessonsEmpty');
   list.innerHTML = '';
 
-  const items = Object.entries(lessons).filter(([id,l]) => l.sectionId === sectionId);
+  const items = Object.entries(lessons).filter(([id, l]) => l.sectionId === sectionId);
 
-  if(items.length === 0){
+  if (items.length === 0) {
     emptyEl.style.display = 'block';
     return;
   }
   emptyEl.style.display = 'none';
 
-  items.sort((a,b)=> (b[1].createdAt||0) - (a[1].createdAt||0));
+  items.sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
 
-  items.forEach(([id, lesson])=>{
+  items.forEach(([id, lesson]) => {
     const vid = extractYoutubeId(lesson.youtubeUrl);
     const card = document.createElement('div');
     card.className = 'lesson-card';
@@ -609,71 +676,70 @@ function renderLessonsForSection(sectionId){
     `;
     list.appendChild(card);
 
-    // عداد المشاهدات: يزيد مرة واحدة عند عرض الدرس
-    if(vid && !card.dataset.counted){
-      db.ref('lessons/'+id+'/views').transaction(v => (v||0)+1);
+    if (vid && !card.dataset.counted) {
+      db.ref('lessons/' + id + '/views').transaction(v => (v || 0) + 1);
       card.dataset.counted = 'true';
     }
   });
 
-  list.querySelectorAll('.share-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
+  list.querySelectorAll('.share-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
       const id = btn.dataset.id;
       const url = `${location.origin}${location.pathname}#lesson=${id}`;
-      navigator.clipboard.writeText(url).then(()=>{
+      navigator.clipboard.writeText(url).then(() => {
         showToast('تم نسخ رابط الدرس');
-      }).catch(()=>{
+      }).catch(() => {
         showToast('تعذر نسخ الرابط');
       });
     });
   });
 }
 
-/* ============================ Auth: Login / Logout ============================ */
-document.getElementById('loginBtn').addEventListener('click', ()=> openModal('loginModal'));
+// Auth
+document.getElementById('loginBtn').addEventListener('click', () => openModal('loginModal'));
 
-document.getElementById('submitLogin').addEventListener('click', ()=>{
+document.getElementById('submitLogin').addEventListener('click', () => {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
 
-  if(!email || !password){
+  if (!email || !password) {
     showFieldError('loginModal', 'الرجاء إدخال البريد الإلكتروني وكلمة المرور');
     return;
   }
-  if(!isValidEmail(email)){
+  if (!isValidEmail(email)) {
     showFieldError('loginModal', 'صيغة البريد الإلكتروني غير صحيحة');
     return;
   }
 
   auth.signInWithEmailAndPassword(email, password)
-    .then(()=>{
+    .then(() => {
       closeModal('loginModal');
       document.getElementById('loginEmail').value = '';
       document.getElementById('loginPassword').value = '';
       showToast('تم تسجيل الدخول بنجاح');
     })
-    .catch(err=>{
+    .catch(err => {
       let msg = 'حدث خطأ أثناء تسجيل الدخول';
-      if(err.code === 'auth/user-not-found') msg = 'هذا البريد الإلكتروني غير مسجل';
-      else if(err.code === 'auth/wrong-password') msg = 'كلمة المرور غير صحيحة';
-      else if(err.code === 'auth/invalid-email') msg = 'صيغة البريد الإلكتروني غير صحيحة';
-      else if(err.code === 'auth/too-many-requests') msg = 'محاولات كثيرة جدًا، حاول لاحقًا';
-      else if(err.code === 'auth/invalid-credential') msg = 'بيانات الدخول غير صحيحة';
+      if (err.code === 'auth/user-not-found') msg = 'هذا البريد الإلكتروني غير مسجل';
+      else if (err.code === 'auth/wrong-password') msg = 'كلمة المرور غير صحيحة';
+      else if (err.code === 'auth/invalid-email') msg = 'صيغة البريد الإلكتروني غير صحيحة';
+      else if (err.code === 'auth/too-many-requests') msg = 'محاولات كثيرة جدًا، حاول لاحقًا';
+      else if (err.code === 'auth/invalid-credential') msg = 'بيانات الدخول غير صحيحة';
       showFieldError('loginModal', msg);
     });
 });
 
-document.getElementById('logoutBtn').addEventListener('click', ()=>{
-  auth.signOut().then(()=>{
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  auth.signOut().then(() => {
     showToast('تم تسجيل الخروج');
     goToPublicView();
   });
 });
 
-document.getElementById('adminNavBtn').addEventListener('click', ()=> goToAdminView());
+document.getElementById('adminNavBtn').addEventListener('click', () => goToAdminView());
 
-auth.onAuthStateChanged(user=>{
-  if(user){
+auth.onAuthStateChanged(user => {
+  if (user) {
     isAdmin = true;
     document.getElementById('loginBtn').style.display = 'none';
     document.getElementById('logoutBtn').style.display = 'inline-flex';
@@ -688,63 +754,63 @@ auth.onAuthStateChanged(user=>{
   }
 });
 
-function goToAdminView(){
+function goToAdminView() {
   document.getElementById('sectionsView').style.display = 'none';
   document.getElementById('lessonsView').style.display = 'none';
   document.getElementById('adminView').style.display = 'block';
   renderAdminSections();
   renderAdminLessons();
 }
-function goToPublicView(){
+
+function goToPublicView() {
   document.getElementById('adminView').style.display = 'none';
   document.getElementById('lessonsView').style.display = 'none';
   document.getElementById('sectionsView').style.display = 'block';
 }
 
-/* ============================ Admin: Sections CRUD ============================ */
-document.getElementById('openAddSection').addEventListener('click', ()=>{
+// Admin Sections
+document.getElementById('openAddSection').addEventListener('click', () => {
   document.getElementById('sectionModalTitle').innerHTML = '<i class="fa-solid fa-folder-plus"></i> إضافة قسم';
   document.getElementById('sectionId').value = '';
   document.getElementById('sectionName').value = '';
   openModal('sectionModal');
 });
 
-document.getElementById('submitSection').addEventListener('click', ()=>{
+document.getElementById('submitSection').addEventListener('click', () => {
   const id = document.getElementById('sectionId').value;
   const name = document.getElementById('sectionName').value.trim();
 
-  if(!name){
+  if (!name) {
     showFieldError('sectionModal', 'الرجاء إدخال اسم القسم');
     return;
   }
 
-  if(id){
-    db.ref('sections/'+id+'/name').set(name)
-      .then(()=>{ closeModal('sectionModal'); showToast('تم تعديل القسم'); })
-      .catch(()=> showFieldError('sectionModal', 'حدث خطأ، تأكد من صلاحياتك'));
+  if (id) {
+    db.ref('sections/' + id).update({ name })
+      .then(() => { closeModal('sectionModal'); showToast('تم تعديل القسم'); })
+      .catch(() => showFieldError('sectionModal', 'حدث خطأ، تأكد من صلاحياتك'));
   } else {
-    const newRef = db.ref('sections').push();
-    newRef.set({ name, createdAt: Date.now() })
-      .then(()=>{ closeModal('sectionModal'); showToast('تمت إضافة القسم'); })
-      .catch(()=> showFieldError('sectionModal', 'حدث خطأ، تأكد من صلاحياتك'));
+    db.ref('sections').push({ name, createdAt: Date.now() })
+      .then(() => { closeModal('sectionModal'); showToast('تمت إضافة القسم'); })
+      .catch(() => showFieldError('sectionModal', 'حدث خطأ، تأكد من صلاحياتك'));
   }
 });
 
-function renderAdminSections(){
+function renderAdminSections() {
   const wrap = document.getElementById('adminSectionsList');
   wrap.innerHTML = '';
   const ids = Object.keys(sections);
-  if(ids.length===0){
+  if (ids.length === 0) {
     wrap.innerHTML = '<p style="color:#95a5a6;">لا توجد أقسام بعد</p>';
     return;
   }
-  ids.forEach(id=>{
+  ids.forEach(id => {
     const sec = sections[id];
     const row = document.createElement('div');
     row.className = 'admin-row';
     row.innerHTML = `
       <div class="info">
-        <strong>${escapeHtml(sec.name||'')}</strong>
+        <strong>${escapeHtml(sec.name || '')}</strong>
         <small>${lessonCountForSection(id)} درس</small>
       </div>
       <div class="actions">
@@ -755,8 +821,8 @@ function renderAdminSections(){
     wrap.appendChild(row);
   });
 
-  wrap.querySelectorAll('.edit-section').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
+  wrap.querySelectorAll('.edit-section').forEach(btn => {
+    btn.addEventListener('click', () => {
       const id = btn.dataset.id;
       document.getElementById('sectionModalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> تعديل القسم';
       document.getElementById('sectionId').value = id;
@@ -764,31 +830,31 @@ function renderAdminSections(){
       openModal('sectionModal');
     });
   });
-  wrap.querySelectorAll('.del-section').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      pendingDelete = { type:'section', id: btn.dataset.id };
+  wrap.querySelectorAll('.del-section').forEach(btn => {
+    btn.addEventListener('click', () => {
+      pendingDelete = { type: 'section', id: btn.dataset.id };
       document.getElementById('confirmText').textContent = 'سيتم حذف القسم وجميع الدروس التابعة له نهائيًا. هل أنت متأكد؟';
       openModal('confirmModal');
     });
   });
 }
 
-/* ============================ Admin: Lessons CRUD ============================ */
-function populateSectionSelect(){
+// Admin Lessons
+function populateSectionSelect() {
   const select = document.getElementById('lessonSection');
   const current = select.value;
   select.innerHTML = '';
-  Object.entries(sections).forEach(([id, sec])=>{
+  Object.entries(sections).forEach(([id, sec]) => {
     const opt = document.createElement('option');
     opt.value = id;
     opt.textContent = sec.name || '';
     select.appendChild(opt);
   });
-  if(current) select.value = current;
+  if (current) select.value = current;
 }
 
-document.getElementById('openAddLesson').addEventListener('click', ()=>{
-  if(Object.keys(sections).length === 0){
+document.getElementById('openAddLesson').addEventListener('click', () => {
+  if (Object.keys(sections).length === 0) {
     showToast('أضف قسمًا أولاً قبل إضافة درس');
     return;
   }
@@ -801,50 +867,49 @@ document.getElementById('openAddLesson').addEventListener('click', ()=>{
   openModal('lessonModal');
 });
 
-document.getElementById('submitLesson').addEventListener('click', ()=>{
+document.getElementById('submitLesson').addEventListener('click', () => {
   const id = document.getElementById('lessonId').value;
   const sectionId = document.getElementById('lessonSection').value;
   const title = document.getElementById('lessonTitle').value.trim();
   const url = document.getElementById('lessonUrl').value.trim();
   const desc = document.getElementById('lessonDesc').value.trim();
 
-  if(!sectionId || !title || !url){
+  if (!sectionId || !title || !url) {
     showFieldError('lessonModal', 'الرجاء تعبئة القسم والعنوان ورابط اليوتيوب');
     return;
   }
-  if(!extractYoutubeId(url)){
+  if (!extractYoutubeId(url)) {
     showFieldError('lessonModal', 'رابط اليوتيوب غير صالح');
     return;
   }
 
-  if(id){
-    db.ref('lessons/'+id).update({ sectionId, title, youtubeUrl: url, description: desc })
-      .then(()=>{ closeModal('lessonModal'); showToast('تم تعديل الدرس'); })
-      .catch(()=> showFieldError('lessonModal', 'حدث خطأ، تأكد من صلاحياتك'));
+  if (id) {
+    db.ref('lessons/' + id).update({ sectionId, title, youtubeUrl: url, description: desc })
+      .then(() => { closeModal('lessonModal'); showToast('تم تعديل الدرس'); })
+      .catch(() => showFieldError('lessonModal', 'حدث خطأ، تأكد من صلاحياتك'));
   } else {
-    const newRef = db.ref('lessons').push();
-    newRef.set({ sectionId, title, youtubeUrl: url, description: desc, createdAt: Date.now(), views: 0 })
-      .then(()=>{ closeModal('lessonModal'); showToast('تمت إضافة الدرس'); })
-      .catch(()=> showFieldError('lessonModal', 'حدث خطأ، تأكد من صلاحياتك'));
+    db.ref('lessons').push({ sectionId, title, youtubeUrl: url, description: desc, createdAt: Date.now(), views: 0 })
+      .then(() => { closeModal('lessonModal'); showToast('تمت إضافة الدرس'); })
+      .catch(() => showFieldError('lessonModal', 'حدث خطأ، تأكد من صلاحياتك'));
   }
 });
 
-function renderAdminLessons(){
+function renderAdminLessons() {
   const wrap = document.getElementById('adminLessonsList');
   wrap.innerHTML = '';
   const entries = Object.entries(lessons);
-  if(entries.length===0){
+  if (entries.length === 0) {
     wrap.innerHTML = '<p style="color:#95a5a6;">لا توجد دروس بعد</p>';
     return;
   }
-  entries.forEach(([id, lesson])=>{
+  entries.forEach(([id, lesson]) => {
     const secName = sections[lesson.sectionId]?.name || 'قسم محذوف';
     const row = document.createElement('div');
     row.className = 'admin-row';
     row.innerHTML = `
       <div class="info">
-        <strong>${escapeHtml(lesson.title||'')}</strong>
-        <small>${escapeHtml(secName)} · ${lesson.views||0} مشاهدة</small>
+        <strong>${escapeHtml(lesson.title || '')}</strong>
+        <small>${escapeHtml(secName)} · ${lesson.views || 0} مشاهدة</small>
       </div>
       <div class="actions">
         <button class="btn btn-gray btn-sm edit-lesson" data-id="${id}"><i class="fa-solid fa-pen"></i></button>
@@ -854,8 +919,8 @@ function renderAdminLessons(){
     wrap.appendChild(row);
   });
 
-  wrap.querySelectorAll('.edit-lesson').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
+  wrap.querySelectorAll('.edit-lesson').forEach(btn => {
+    btn.addEventListener('click', () => {
       const id = btn.dataset.id;
       const lesson = lessons[id];
       document.getElementById('lessonModalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> تعديل الدرس';
@@ -868,39 +933,38 @@ function renderAdminLessons(){
       openModal('lessonModal');
     });
   });
-  wrap.querySelectorAll('.del-lesson').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      pendingDelete = { type:'lesson', id: btn.dataset.id };
+  wrap.querySelectorAll('.del-lesson').forEach(btn => {
+    btn.addEventListener('click', () => {
+      pendingDelete = { type: 'lesson', id: btn.dataset.id };
       document.getElementById('confirmText').textContent = 'سيتم حذف هذا الدرس نهائيًا. هل أنت متأكد؟';
       openModal('confirmModal');
     });
   });
 }
 
-/* ============================ Confirm Delete ============================ */
-document.getElementById('cancelDelete').addEventListener('click', ()=>{
+// Confirm Delete
+document.getElementById('cancelDelete').addEventListener('click', () => {
   pendingDelete = null;
   closeModal('confirmModal');
 });
 
-document.getElementById('confirmDelete').addEventListener('click', ()=>{
-  if(!pendingDelete) return;
+document.getElementById('confirmDelete').addEventListener('click', () => {
+  if (!pendingDelete) return;
 
-  if(pendingDelete.type === 'section'){
+  if (pendingDelete.type === 'section') {
     const sectionId = pendingDelete.id;
-    // احذف كل الدروس المرتبطة بالقسم أولاً
     const updates = {};
-    Object.entries(lessons).forEach(([lid, l])=>{
-      if(l.sectionId === sectionId) updates['lessons/'+lid] = null;
+    Object.entries(lessons).forEach(([lid, l]) => {
+      if (l.sectionId === sectionId) updates['lessons/' + lid] = null;
     });
-    updates['sections/'+sectionId] = null;
+    updates['sections/' + sectionId] = null;
     db.ref().update(updates)
-      .then(()=> showToast('تم حذف القسم'))
-      .catch(()=> showToast('تعذر الحذف، تحقق من صلاحياتك'));
-  } else if(pendingDelete.type === 'lesson'){
-    db.ref('lessons/'+pendingDelete.id).remove()
-      .then(()=> showToast('تم حذف الدرس'))
-      .catch(()=> showToast('تعذر الحذف، تحقق من صلاحياتك'));
+      .then(() => showToast('تم حذف القسم'))
+      .catch(() => showToast('تعذر الحذف، تحقق من صلاحياتك'));
+  } else if (pendingDelete.type === 'lesson') {
+    db.ref('lessons/' + pendingDelete.id).remove()
+      .then(() => showToast('تم حذف الدرس'))
+      .catch(() => showToast('تعذر الحذف، تحقق من صلاحياتك'));
   }
 
   pendingDelete = null;
