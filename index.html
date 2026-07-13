@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>المعلمة رشا حسن | منصة تعليمية</title>
 
-<link rel="preconnect" href="https://www.youtube-nocookie.com">
-<link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
+<!-- تحسين الاتصال بموقع Videy للتحميل السريع -->
+<link rel="preconnect" href="https://videy.co">
+<link rel="dns-prefetch" href="https://videy.co">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -316,14 +317,14 @@
   .admin-row .info small { color: #95a5a6; }
   .admin-row .actions { display: flex; gap: 8px; }
   
-  /* ✅ مؤشر تحميل */
+  /* ✅ مؤشر تحميل مريح للعين */
   .loading-overlay {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.75);
     color: #fff;
     z-index: 10;
     font-size: 1rem;
@@ -471,12 +472,12 @@
       <input type="text" id="lessonTitle" placeholder="مثال: درس الجمع">
     </div>
     <div class="field">
-      <label>رابط اليوتيوب</label>
-      <input type="text" id="lessonUrl" placeholder="https://www.youtube.com/watch?v=xxxxx">
+      <label>رابط فيديو Videy</label>
+      <input type="text" id="lessonUrl" placeholder="https://videy.co/v?id=xxxxx أو المعرف مباشرة">
     </div>
     <div class="field">
       <label>الوصف</label>
-      <textarea id="lessonDesc" placeholder="شرح مبسط..."></textarea>
+      <textarea id="lessonDesc" placeholder="شرح مبسط للدرس..."></textarea>
     </div>
     <div class="modal-actions">
       <button class="btn btn-primary" id="submitLesson" style="flex:1;justify-content:center;">
@@ -558,21 +559,25 @@ function showFieldError(modalId, text) {
   box.classList.add('active');
 }
 
-// ✅ دالة استخراج المعرف المعدلة والذكية
-function extractYoutubeId(url) {
+// ✅ دالة استخراج معرف الفيديو لـ Videy بشكل متقدم ومرن جداً
+function extractVideyId(url) {
   if (!url) return null;
   url = url.trim();
   
-  // تعبير نمطي قوي لاستخراج معرّفات يوتيوب بجميع الصيغ
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  
-  if (match && match[2].length === 11) {
-    return match[2];
+  // 1. استخراج الـ ID من معامل الفلترة ?id=xxxxx
+  const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (matchId) {
+    return matchId[1];
   }
   
-  // التحقق الإضافي إذا تم إدخال معرّف الفيديو (11 حرف) مباشرة
-  if (url.length === 11 && /^[a-zA-Z0-9_-]{11}$/.test(url)) {
+  // 2. استخراج الـ ID في حال تم وضع الرابط بصيغة videy.co/xxxxxx
+  const matchPath = url.match(/videy\.co\/([a-zA-Z0-9_-]+)/);
+  if (matchPath) {
+    return matchPath[1];
+  }
+  
+  // 3. في حال أدخل المدير الـ ID فقط مباشرة وكان صالحاً
+  if (/^[a-zA-Z0-9_-]{4,20}$/.test(url)) {
     return url;
   }
   
@@ -590,27 +595,37 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// Load data
-db.ref('sections').on('value', (snap) => {
-  sections = snap.val() || {};
-  document.getElementById('sectionsLoading').style.display = 'none';
-  renderSectionsGrid();
-  populateSectionSelect();
-  if (isAdmin) renderAdminSections();
-  if (currentSectionId) renderLessonsForSection(currentSectionId);
-}, (error) => {
-  console.error('Error loading sections:', error);
-  document.getElementById('sectionsLoading').innerHTML = '❌ حدث خطأ في تحميل البيانات';
-});
+// ✅ الدالة الموحدة والمثالية لجلب البيانات لمرة واحدة (تمنع التكرار اللانهائي وتثبت الفيديو)
+function refreshData() {
+  document.getElementById('sectionsLoading').style.display = 'flex';
+  
+  return Promise.all([
+    db.ref('sections').once('value'),
+    db.ref('lessons').once('value')
+  ]).then(([sectionsSnap, lessonsSnap]) => {
+    sections = sectionsSnap.val() || {};
+    lessons = lessonsSnap.val() || {};
+    
+    document.getElementById('sectionsLoading').style.display = 'none';
+    renderSectionsGrid();
+    populateSectionSelect();
+    
+    if (isAdmin) {
+      renderAdminSections();
+      renderAdminLessons();
+    }
+    
+    if (currentSectionId) {
+      renderLessonsForSection(currentSectionId);
+    }
+  }).catch((error) => {
+    console.error('Error loading data:', error);
+    document.getElementById('sectionsLoading').innerHTML = '❌ حدث خطأ في تحميل البيانات';
+  });
+}
 
-db.ref('lessons').on('value', (snap) => {
-  lessons = snap.val() || {};
-  renderSectionsGrid();
-  if (isAdmin) renderAdminLessons();
-  if (currentSectionId) renderLessonsForSection(currentSectionId);
-}, (error) => {
-  console.error('Error loading lessons:', error);
-});
+// تشغيل جلب البيانات عند بدء تحميل الصفحة
+refreshData();
 
 function lessonCountForSection(sectionId) {
   return Object.values(lessons).filter(l => l.sectionId === sectionId).length;
@@ -670,7 +685,7 @@ document.getElementById('backToSections').addEventListener('click', () => {
   document.getElementById('sectionsView').style.display = 'block';
 });
 
-// ✅ دالة عرض الدروس المحسّنة للنت الضعيف
+// ✅ دالة رسم الدروس المحسّنة لـ Videy (تمت حماية المشاهدات وتثبيت التشغيل)
 function renderLessonsForSection(sectionId) {
   const list = document.getElementById('lessonsList');
   const emptyEl = document.getElementById('lessonsEmpty');
@@ -687,12 +702,13 @@ function renderLessonsForSection(sectionId) {
   items.sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
 
   items.forEach(([id, lesson]) => {
-    const vid = extractYoutubeId(lesson.youtubeUrl);
+    // دعم كافة أسماء الحقول الممكنة للروابط لضمان عدم حدوث أخطاء
+    const vid = extractVideyId(lesson.videyUrl || lesson.youtubeUrl || lesson.url);
     const card = document.createElement('div');
     card.className = 'lesson-card';
     
-    // ✅ جودة منخفضة للنت الضعيف + no autoplay
-    const embedUrl = vid ? `https://www.youtube-nocookie.com/embed/${vid}?enablejsapi=1&rel=0&modestbranding=1&autoplay=0&mute=0&controls=1&showinfo=0&iv_load_policy=3&cc_load_policy=0&fs=1&vq=small` : '';
+    // رابط تضمين الـ Embed الخاص بـ Videy
+    const embedUrl = vid ? `https://videy.co/embed?id=${vid}` : '';
     
     card.innerHTML = `
       <div class="lesson-video">
@@ -704,8 +720,6 @@ function renderLessonsForSection(sectionId) {
           <iframe src="${embedUrl}" 
             loading="lazy" 
             allowfullscreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
             style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;">
           </iframe>
         ` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;background:#222;font-size:1.1rem;">⚠️ رابط الفيديو غير صالح</div>`}
@@ -715,7 +729,7 @@ function renderLessonsForSection(sectionId) {
         <p>${escapeHtml(lesson.description || '')}</p>
         <div class="lesson-meta">
           <div class="lesson-stats">
-            <span><i class="fa-solid fa-eye"></i> ${lesson.views || 0} مشاهدة</span>
+            <span><i class="fa-solid fa-eye"></i> <span id="views-count-${id}">${lesson.views || 0}</span> مشاهدة</span>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button class="btn btn-primary btn-sm play-btn" data-id="${id}"><i class="fa-solid fa-play"></i> تشغيل</button>
@@ -725,16 +739,12 @@ function renderLessonsForSection(sectionId) {
       </div>
     `;
     list.appendChild(card);
-
-    if (vid && !card.dataset.counted) {
-      db.ref('lessons/' + id + '/views').transaction(v => (v || 0) + 1);
-      card.dataset.counted = 'true';
-    }
   });
 
-  // ✅ زر التشغيل - يخفي overlay ويشغل الفيديو
+  // ✅ زر التشغيل: يخفي الغطاء الخارجي ويشغل الفيديو ويزيد المشاهدة بأمان
   list.querySelectorAll('.play-btn').forEach(btn => {
     btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
       const card = btn.closest('.lesson-card');
       const overlay = card.querySelector('.loading-overlay');
       const iframe = card.querySelector('iframe');
@@ -744,31 +754,42 @@ function renderLessonsForSection(sectionId) {
       }
       
       if (iframe) {
-        // إعادة تحميل الفيديو مع تشغيل تلقائي
         let src = iframe.src;
-        if (src.includes('autoplay=0')) {
-          iframe.src = src.replace('autoplay=0', 'autoplay=1');
-        } else if (src.includes('?')) {
-          iframe.src = src + '&autoplay=1';
-        } else {
-          iframe.src = src + '?autoplay=1';
+        // محاولة فرض التشغيل التلقائي داخل الـ Iframe عند النقر
+        if (!src.includes('autoplay=1')) {
+          iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
         }
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جارِ التحميل...';
         btn.disabled = true;
         setTimeout(() => {
           btn.innerHTML = '<i class="fa-solid fa-play"></i> إعادة تشغيل';
           btn.disabled = false;
-        }, 8000);
+        }, 6000);
+      }
+
+      // ✅ زيادة عداد المشاهدات "فقط عند الضغط بلمحة نقر" ودون الدخول في حلقة تكرار
+      if (!btn.dataset.counted) {
+        db.ref('lessons/' + id + '/views').transaction(v => (v || 0) + 1, (error, committed, snapshot) => {
+          if (committed && snapshot !== null) {
+            // تحديث الرقم المعروض للمستخدم مباشرة على الشاشة دون إعادة رسم عناصر الصفحة
+            const countText = document.getElementById(`views-count-${id}`);
+            if (countText) {
+              countText.textContent = snapshot.val();
+            }
+          }
+        });
+        btn.dataset.counted = 'true';
       }
     });
   });
 
+  // زر المشاركة
   list.querySelectorAll('.share-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
       const url = `${location.origin}${location.pathname}#lesson=${id}`;
       navigator.clipboard.writeText(url).then(() => {
-        showToast('تم نسخ رابط الدرس');
+        showToast('تم نسخ رابط الدرس بنجاح');
       }).catch(() => {
         showToast('تعذر نسخ الرابط');
       });
@@ -868,11 +889,11 @@ document.getElementById('submitSection').addEventListener('click', () => {
 
   if (id) {
     db.ref('sections/' + id).update({ name })
-      .then(() => { closeModal('sectionModal'); showToast('تم تعديل القسم'); })
+      .then(() => { closeModal('sectionModal'); refreshData(); showToast('تم تعديل القسم بنجاح'); })
       .catch(() => showFieldError('sectionModal', 'حدث خطأ، تأكد من صلاحياتك'));
   } else {
     db.ref('sections').push({ name, createdAt: Date.now() })
-      .then(() => { closeModal('sectionModal'); showToast('تمت إضافة القسم'); })
+      .then(() => { closeModal('sectionModal'); refreshData(); showToast('تمت إضافة القسم بنجاح'); })
       .catch(() => showFieldError('sectionModal', 'حدث خطأ، تأكد من صلاحياتك'));
   }
 });
@@ -956,21 +977,30 @@ document.getElementById('submitLesson').addEventListener('click', () => {
   const desc = document.getElementById('lessonDesc').value.trim();
 
   if (!sectionId || !title || !url) {
-    showFieldError('lessonModal', 'الرجاء تعبئة القسم والعنوان ورابط اليوتيوب');
+    showFieldError('lessonModal', 'الرجاء تعبئة القسم والعنوان ورابط الفيديو');
     return;
   }
-  if (!extractYoutubeId(url)) {
-    showFieldError('lessonModal', '⚠️ رابط اليوتيوب غير صالح. تأكد من الرابط');
+  if (!extractVideyId(url)) {
+    showFieldError('lessonModal', '⚠️ رابط فيديو Videy غير صالح. يرجى إدخال الرابط بالشكل الصحيح');
     return;
   }
 
+  const lessonData = {
+    sectionId,
+    title,
+    videyUrl: url,
+    description: desc
+  };
+
   if (id) {
-    db.ref('lessons/' + id).update({ sectionId, title, youtubeUrl: url, description: desc })
-      .then(() => { closeModal('lessonModal'); showToast('تم تعديل الدرس'); })
+    db.ref('lessons/' + id).update(lessonData)
+      .then(() => { closeModal('lessonModal'); refreshData(); showToast('تم تعديل الدرس بنجاح'); })
       .catch(() => showFieldError('lessonModal', 'حدث خطأ، تأكد من صلاحياتك'));
   } else {
-    db.ref('lessons').push({ sectionId, title, youtubeUrl: url, description: desc, createdAt: Date.now(), views: 0 })
-      .then(() => { closeModal('lessonModal'); showToast('تمت إضافة الدرس'); })
+    lessonData.createdAt = Date.now();
+    lessonData.views = 0;
+    db.ref('lessons').push(lessonData)
+      .then(() => { closeModal('lessonModal'); refreshData(); showToast('تمت إضافة الدرس بنجاح'); })
       .catch(() => showFieldError('lessonModal', 'حدث خطأ، تأكد من صلاحياتك'));
   }
 });
@@ -1009,7 +1039,8 @@ function renderAdminLessons() {
       populateSectionSelect();
       document.getElementById('lessonSection').value = lesson.sectionId;
       document.getElementById('lessonTitle').value = lesson.title || '';
-      document.getElementById('lessonUrl').value = lesson.youtubeUrl || '';
+      // قراءة الروابط القديمة أو الجديدة بشكل آمن تماماً
+      document.getElementById('lessonUrl').value = lesson.videyUrl || lesson.youtubeUrl || lesson.url || '';
       document.getElementById('lessonDesc').value = lesson.description || '';
       openModal('lessonModal');
     });
@@ -1040,11 +1071,11 @@ document.getElementById('confirmDelete').addEventListener('click', () => {
     });
     updates['sections/' + sectionId] = null;
     db.ref().update(updates)
-      .then(() => showToast('تم حذف القسم'))
+      .then(() => { refreshData(); showToast('تم حذف القسم بنجاح'); })
       .catch(() => showToast('تعذر الحذف، تحقق من صلاحياتك'));
   } else if (pendingDelete.type === 'lesson') {
     db.ref('lessons/' + pendingDelete.id).remove()
-      .then(() => showToast('تم حذف الدرس'))
+      .then(() => { refreshData(); showToast('تم حذف الدرس بنجاح'); })
       .catch(() => showToast('تعذر الحذف، تحقق من صلاحياتك'));
   }
 
