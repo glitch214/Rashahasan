@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>المعلمة رشا حسن | منصة تعليمية</title>
 
+<!-- ✅ تحميل يوتيوب مسبقاً -->
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://www.youtube.com">
+<link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -150,6 +155,10 @@
     width: 100%;
     height: 100%;
     border: 0;
+    background: #000;
+    /* ✅ تسريع التحميل */
+    will-change: transform;
+    content-visibility: auto;
   }
   .lesson-body { padding: 18px 20px; }
   .lesson-body h3 { margin-bottom: 8px; font-size: 1.1rem; }
@@ -445,7 +454,7 @@
     </div>
     <div class="field">
       <label>رابط اليوتيوب</label>
-      <input type="text" id="lessonUrl" placeholder="https://youtu.be/xxxxx">
+      <input type="text" id="lessonUrl" placeholder="https://www.youtube.com/watch?v=xxxxx">
     </div>
     <div class="field">
       <label>الوصف</label>
@@ -479,6 +488,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
+// ✅ Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAU1pFvv6PAefLeYnOq-0JmhuMqPmrCPEU",
   authDomain: "rashahasa-abbc7.firebaseapp.com",
@@ -493,12 +503,14 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
+// State
 let sections = {};
 let lessons = {};
 let currentSectionId = null;
 let isAdmin = false;
 let pendingDelete = null;
 
+// Helpers
 function showToast(msg) {
   const toast = document.getElementById('toast');
   document.getElementById('toastText').textContent = msg;
@@ -528,29 +540,17 @@ function showFieldError(modalId, text) {
   box.classList.add('active');
 }
 
-// ✅ دالة استخراج رابط اليوتيوب المُحسّنة
+// ✅ دالة استخراج معرف اليوتيوب
 function extractYoutubeId(url) {
   if (!url) return null;
-  
-  // تنظيف الرابط من المعاملات الإضافية
   let cleanUrl = url.split('?')[0].split('&')[0];
   cleanUrl = cleanUrl.trim();
-  
-  const patterns = [
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/
-  ];
-  
-  for (const pattern of patterns) {
-    const match = cleanUrl.match(pattern);
-    if (match) return match[1];
+  let match = cleanUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
+  if (match) return match[1];
+  match = cleanUrl.match(/([a-zA-Z0-9_-]{11})/);
+  if (match && (cleanUrl.includes('youtube') || cleanUrl.includes('youtu.be'))) {
+    return match[1];
   }
-  
-  const fallbackMatch = cleanUrl.match(/([a-zA-Z0-9_-]{11})/);
-  if (fallbackMatch && (cleanUrl.includes('youtube') || cleanUrl.includes('youtu.be'))) {
-    return fallbackMatch[1];
-  }
-  
   return null;
 }
 
@@ -645,7 +645,7 @@ document.getElementById('backToSections').addEventListener('click', () => {
   document.getElementById('sectionsView').style.display = 'block';
 });
 
-// ✅ دالة عرض الدروس مع iframe مُحسّن
+// ✅ دالة عرض الدروس مع تشغيل سريع
 function renderLessonsForSection(sectionId) {
   const list = document.getElementById('lessonsList');
   const emptyEl = document.getElementById('lessonsEmpty');
@@ -666,15 +666,17 @@ function renderLessonsForSection(sectionId) {
     const card = document.createElement('div');
     card.className = 'lesson-card';
     
-    // ✅ iframe مُحسّن مع جميع الإعدادات المطلوبة
+    // ✅ استخدام youtube-nocookie.com مع إعدادات سريعة
+    const embedUrl = vid ? `https://www.youtube-nocookie.com/embed/${vid}?enablejsapi=1&rel=0&modestbranding=1&autoplay=0&mute=0&controls=1&showinfo=0&iv_load_policy=3&cc_load_policy=0&fs=1&vq=hd720` : '';
+    
     card.innerHTML = `
       <div class="lesson-video">
-        ${vid ? `<iframe src="https://www.youtube.com/embed/${vid}?enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}&rel=0&modestbranding=1&autoplay=0&mute=0" 
+        ${vid ? `<iframe src="${embedUrl}" 
           loading="lazy" 
           allowfullscreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
-          style="position:absolute;inset:0;width:100%;height:100%;border:0;">
+          style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;">
         </iframe>` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;background:#222;font-size:1.1rem;">⚠️ رابط الفيديو غير صالح</div>`}
       </div>
       <div class="lesson-body">
