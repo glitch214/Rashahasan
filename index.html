@@ -534,18 +534,30 @@ function showFieldError(modalId, text) {
   box.classList.add('active');
 }
 
+// ✅ دالة استخراج رابط اليوتيوب المُحسّنة
 function extractYoutubeId(url) {
   if (!url) return null;
+  
+  url = url.trim();
+  
+  // أنماط الرابط المدعومة
   const patterns = [
-    /youtu\.be\/([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/watch\?.*v=([a-zA-Z0-9_-]{11})/
   ];
-  for (const p of patterns) {
-    const m = url.match(p);
-    if (m) return m[1];
+  
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
   }
+  
+  // محاولة استخراج أي 11 حرف (للمرونة)
+  const fallbackMatch = url.match(/([a-zA-Z0-9_-]{11})/);
+  if (fallbackMatch && (url.includes('youtube') || url.includes('youtu.be'))) {
+    return fallbackMatch[1];
+  }
+  
   return null;
 }
 
@@ -661,7 +673,7 @@ function renderLessonsForSection(sectionId) {
     card.className = 'lesson-card';
     card.innerHTML = `
       <div class="lesson-video">
-        ${vid ? `<iframe src="https://www.youtube.com/embed/${vid}" loading="lazy" allowfullscreen></iframe>` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;">رابط الفيديو غير صالح</div>`}
+        ${vid ? `<iframe src="https://www.youtube.com/embed/${vid}" loading="lazy" allowfullscreen></iframe>` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;">⚠️ رابط الفيديو غير صالح</div>`}
       </div>
       <div class="lesson-body">
         <h3>${escapeHtml(lesson.title || '')}</h3>
@@ -879,7 +891,7 @@ document.getElementById('submitLesson').addEventListener('click', () => {
     return;
   }
   if (!extractYoutubeId(url)) {
-    showFieldError('lessonModal', 'رابط اليوتيوب غير صالح');
+    showFieldError('lessonModal', '⚠️ رابط اليوتيوب غير صالح. تأكد من الرابط');
     return;
   }
 
