@@ -345,7 +345,6 @@
 
 <div class="container">
 
-  <!-- Sections View -->
   <div id="sectionsView">
     <div class="search-wrap">
       <input type="text" id="searchInput" placeholder="ابحث عن قسم أو درس...">
@@ -360,7 +359,6 @@
     </div>
   </div>
 
-  <!-- Lessons View -->
   <div id="lessonsView">
     <div class="back-btn" id="backToSections"><i class="fa-solid fa-arrow-right"></i> رجوع إلى الأقسام</div>
     <h2 id="currentSectionTitle"></h2>
@@ -371,7 +369,6 @@
     </div>
   </div>
 
-  <!-- Admin View -->
   <div id="adminView">
     <h2><i class="fa-solid fa-gauge"></i> لوحة تحكم المدير</h2>
     <div class="admin-toolbar">
@@ -482,7 +479,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-// ✅ Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAU1pFvv6PAefLeYnOq-0JmhuMqPmrCPEU",
   authDomain: "rashahasa-abbc7.firebaseapp.com",
@@ -497,14 +493,12 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
-// State
 let sections = {};
 let lessons = {};
 let currentSectionId = null;
 let isAdmin = false;
 let pendingDelete = null;
 
-// Helpers
 function showToast(msg) {
   const toast = document.getElementById('toast');
   document.getElementById('toastText').textContent = msg;
@@ -538,23 +532,22 @@ function showFieldError(modalId, text) {
 function extractYoutubeId(url) {
   if (!url) return null;
   
-  url = url.trim();
+  // تنظيف الرابط من المعاملات الإضافية
+  let cleanUrl = url.split('?')[0].split('&')[0];
+  cleanUrl = cleanUrl.trim();
   
-  // أنماط الرابط المدعومة
   const patterns = [
     /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/watch\?.*v=([a-zA-Z0-9_-]{11})/
+    /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/
   ];
   
   for (const pattern of patterns) {
-    const match = url.match(pattern);
+    const match = cleanUrl.match(pattern);
     if (match) return match[1];
   }
   
-  // محاولة استخراج أي 11 حرف (للمرونة)
-  const fallbackMatch = url.match(/([a-zA-Z0-9_-]{11})/);
-  if (fallbackMatch && (url.includes('youtube') || url.includes('youtu.be'))) {
+  const fallbackMatch = cleanUrl.match(/([a-zA-Z0-9_-]{11})/);
+  if (fallbackMatch && (cleanUrl.includes('youtube') || cleanUrl.includes('youtu.be'))) {
     return fallbackMatch[1];
   }
   
@@ -652,6 +645,7 @@ document.getElementById('backToSections').addEventListener('click', () => {
   document.getElementById('sectionsView').style.display = 'block';
 });
 
+// ✅ دالة عرض الدروس مع iframe مُحسّن
 function renderLessonsForSection(sectionId) {
   const list = document.getElementById('lessonsList');
   const emptyEl = document.getElementById('lessonsEmpty');
@@ -671,9 +665,17 @@ function renderLessonsForSection(sectionId) {
     const vid = extractYoutubeId(lesson.youtubeUrl);
     const card = document.createElement('div');
     card.className = 'lesson-card';
+    
+    // ✅ iframe مُحسّن مع جميع الإعدادات المطلوبة
     card.innerHTML = `
       <div class="lesson-video">
-        ${vid ? `<iframe src="https://www.youtube.com/embed/${vid}" loading="lazy" allowfullscreen></iframe>` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;">⚠️ رابط الفيديو غير صالح</div>`}
+        ${vid ? `<iframe src="https://www.youtube.com/embed/${vid}?enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}&rel=0&modestbranding=1&autoplay=0&mute=0" 
+          loading="lazy" 
+          allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          style="position:absolute;inset:0;width:100%;height:100%;border:0;">
+        </iframe>` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;background:#222;font-size:1.1rem;">⚠️ رابط الفيديو غير صالح</div>`}
       </div>
       <div class="lesson-body">
         <h3>${escapeHtml(lesson.title || '')}</h3>
