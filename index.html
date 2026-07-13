@@ -6,8 +6,8 @@
 <title>المعلمة رشا حسن | منصة تعليمية</title>
 
 <!-- تحسين الاتصال بموقع Videy للتحميل السريع -->
-<link rel="preconnect" href="https://videy.co">
-<link rel="dns-prefetch" href="https://videy.co">
+<link rel="preconnect" href="https://cdn.videy.co">
+<link rel="dns-prefetch" href="https://cdn.videy.co">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -148,7 +148,7 @@
     padding-top: 56.25%;
     background: #000;
   }
-  .lesson-video iframe {
+  .lesson-video iframe, .lesson-video video {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -316,29 +316,6 @@
   .admin-row .info strong { display: block; }
   .admin-row .info small { color: #95a5a6; }
   .admin-row .actions { display: flex; gap: 8px; }
-  
-  /* ✅ مؤشر تحميل مريح للعين */
-  .loading-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.75);
-    color: #fff;
-    z-index: 10;
-    font-size: 1rem;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .loading-overlay .spinner-small {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 3px solid #555;
-    border-top-color: #3498db;
-    animation: spin 0.8s linear infinite;
-  }
   
   footer {
     text-align: center;
@@ -559,7 +536,7 @@ function showFieldError(modalId, text) {
   box.classList.add('active');
 }
 
-// ✅ دالة استخراج معرف الفيديو لـ Videy بشكل متقدم ومرن جداً
+// ✅ دالة استخراج معرف الفيديو لـ Videy بشكل متقدم للغاية ومقاوم لكل الأخطاء
 function extractVideyId(url) {
   if (!url) return null;
   url = url.trim();
@@ -575,8 +552,14 @@ function extractVideyId(url) {
   if (matchPath) {
     return matchPath[1];
   }
+
+  // 3. استخراج الـ ID من روابط الـ CDN المباشرة cdn.videy.co/xxxxx.mp4
+  const matchCdn = url.match(/cdn\.videy\.co\/([a-zA-Z0-9_-]+)\.mp4/);
+  if (matchCdn) {
+    return matchCdn[1];
+  }
   
-  // 3. في حال أدخل المدير الـ ID فقط مباشرة وكان صالحاً
+  // 4. في حال أدخل المدير الـ ID فقط مباشرة وكان صالحاً
   if (/^[a-zA-Z0-9_-]{4,20}$/.test(url)) {
     return url;
   }
@@ -595,7 +578,7 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// ✅ الدالة الموحدة والمثالية لجلب البيانات لمرة واحدة (تمنع التكرار اللانهائي وتثبت الفيديو)
+// جلب البيانات لمرة واحدة
 function refreshData() {
   document.getElementById('sectionsLoading').style.display = 'flex';
   
@@ -685,7 +668,7 @@ document.getElementById('backToSections').addEventListener('click', () => {
   document.getElementById('sectionsView').style.display = 'block';
 });
 
-// ✅ دالة رسم الدروس المحسّنة لـ Videy (تمت حماية المشاهدات وتثبيت التشغيل)
+// ✅ دالة رسم الدروس الاحترافية الجديدة باستخدام مشغل الـ HTML5 الأصلي
 function renderLessonsForSection(sectionId) {
   const list = document.getElementById('lessonsList');
   const emptyEl = document.getElementById('lessonsEmpty');
@@ -702,26 +685,20 @@ function renderLessonsForSection(sectionId) {
   items.sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
 
   items.forEach(([id, lesson]) => {
-    // دعم كافة أسماء الحقول الممكنة للروابط لضمان عدم حدوث أخطاء
     const vid = extractVideyId(lesson.videyUrl || lesson.youtubeUrl || lesson.url);
     const card = document.createElement('div');
     card.className = 'lesson-card';
     
-    // رابط تضمين الـ Embed الخاص بـ Videy
-    const embedUrl = vid ? `https://videy.co/embed?id=${vid}` : '';
+    // بناء رابط الـ CDN المباشر للفيديو بدقة عالية
+    const directVideoUrl = vid ? `https://cdn.videy.co/${vid}.mp4` : '';
     
     card.innerHTML = `
       <div class="lesson-video">
         ${vid ? `
-          <div class="loading-overlay" id="loading-${id}">
-            <div class="spinner-small"></div>
-            <span>اضغط "تشغيل" لبدء الفيديو</span>
-          </div>
-          <iframe src="${embedUrl}" 
-            loading="lazy" 
-            allowfullscreen
-            style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;">
-          </iframe>
+          <video id="video-${id}" controls controlsList="nodownload" playsinline style="position:absolute;inset:0;width:100%;height:100%;background:#000;">
+            <source src="${directVideoUrl}" type="video/mp4">
+            متصفحك لا يدعم تشغيل الفيديو.
+          </video>
         ` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;background:#222;font-size:1.1rem;">⚠️ رابط الفيديو غير صالح</div>`}
       </div>
       <div class="lesson-body">
@@ -739,51 +716,48 @@ function renderLessonsForSection(sectionId) {
       </div>
     `;
     list.appendChild(card);
-  });
 
-  // ✅ زر التشغيل: يخفي الغطاء الخارجي ويشغل الفيديو ويزيد المشاهدة بأمان
-  list.querySelectorAll('.play-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      const card = btn.closest('.lesson-card');
-      const overlay = card.querySelector('.loading-overlay');
-      const iframe = card.querySelector('iframe');
-      
-      if (overlay) {
-        overlay.style.display = 'none';
-      }
-      
-      if (iframe) {
-        let src = iframe.src;
-        // محاولة فرض التشغيل التلقائي داخل الـ Iframe عند النقر
-        if (!src.includes('autoplay=1')) {
-          iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
-        }
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جارِ التحميل...';
-        btn.disabled = true;
-        setTimeout(() => {
-          btn.innerHTML = '<i class="fa-solid fa-play"></i> إعادة تشغيل';
-          btn.disabled = false;
-        }, 6000);
-      }
+    // ربط المشغل البرمجي وزيادة المشاهدات عند التفاعل الفعلي
+    const videoEl = document.getElementById(`video-${id}`);
+    const playBtn = card.querySelector('.play-btn');
 
-      // ✅ زيادة عداد المشاهدات "فقط عند الضغط بلمحة نقر" ودون الدخول في حلقة تكرار
-      if (!btn.dataset.counted) {
-        db.ref('lessons/' + id + '/views').transaction(v => (v || 0) + 1, (error, committed, snapshot) => {
-          if (committed && snapshot !== null) {
-            // تحديث الرقم المعروض للمستخدم مباشرة على الشاشة دون إعادة رسم عناصر الصفحة
-            const countText = document.getElementById(`views-count-${id}`);
-            if (countText) {
-              countText.textContent = snapshot.val();
+    if (videoEl && playBtn) {
+      const incrementView = () => {
+        if (!playBtn.dataset.counted) {
+          db.ref('lessons/' + id + '/views').transaction(v => (v || 0) + 1, (error, committed, snapshot) => {
+            if (committed && snapshot !== null) {
+              const countText = document.getElementById(`views-count-${id}`);
+              if (countText) {
+                countText.textContent = snapshot.val();
+              }
             }
-          }
-        });
-        btn.dataset.counted = 'true';
-      }
-    });
+          });
+          playBtn.dataset.counted = 'true';
+        }
+      };
+
+      // الضغط على زر التشغيل الخارجي لبطاقة الدرس
+      playBtn.addEventListener('click', () => {
+        if (videoEl.paused) {
+          videoEl.play();
+        } else {
+          videoEl.pause();
+        }
+      });
+
+      // مزامنة أزرار التحكم لتغيير نصوص التشغيل/الإيقاف المؤقت بشكل طبيعي
+      videoEl.addEventListener('play', () => {
+        playBtn.innerHTML = '<i class="fa-solid fa-pause"></i> إيقاف مؤقت';
+        incrementView(); // يتم تسجيل المشاهدة بمجرد بدء البث الفعلي للفيديو
+      });
+
+      videoEl.addEventListener('pause', () => {
+        playBtn.innerHTML = '<i class="fa-solid fa-play"></i> تشغيل';
+      });
+    }
   });
 
-  // زر المشاركة
+  // زر مشاركة الدرس
   list.querySelectorAll('.share-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
@@ -1039,7 +1013,6 @@ function renderAdminLessons() {
       populateSectionSelect();
       document.getElementById('lessonSection').value = lesson.sectionId;
       document.getElementById('lessonTitle').value = lesson.title || '';
-      // قراءة الروابط القديمة أو الجديدة بشكل آمن تماماً
       document.getElementById('lessonUrl').value = lesson.videyUrl || lesson.youtubeUrl || lesson.url || '';
       document.getElementById('lessonDesc').value = lesson.description || '';
       openModal('lessonModal');
