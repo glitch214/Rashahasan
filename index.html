@@ -558,16 +558,24 @@ function showFieldError(modalId, text) {
   box.classList.add('active');
 }
 
+// ✅ دالة استخراج المعرف المعدلة والذكية
 function extractYoutubeId(url) {
   if (!url) return null;
-  let cleanUrl = url.split('?')[0].split('&')[0];
-  cleanUrl = cleanUrl.trim();
-  let match = cleanUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
-  if (match) return match[1];
-  match = cleanUrl.match(/([a-zA-Z0-9_-]{11})/);
-  if (match && (cleanUrl.includes('youtube') || cleanUrl.includes('youtu.be'))) {
-    return match[1];
+  url = url.trim();
+  
+  // تعبير نمطي قوي لاستخراج معرّفات يوتيوب بجميع الصيغ
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  
+  if (match && match[2].length === 11) {
+    return match[2];
   }
+  
+  // التحقق الإضافي إذا تم إدخال معرّف الفيديو (11 حرف) مباشرة
+  if (url.length === 11 && /^[a-zA-Z0-9_-]{11}$/.test(url)) {
+    return url;
+  }
+  
   return null;
 }
 
