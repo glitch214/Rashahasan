@@ -62,6 +62,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
   }
   .btn-primary { background: var(--blue); color: var(--white); }
   .btn-primary:hover { background: #2f85bd; }
@@ -148,7 +149,7 @@
     padding-top: 56.25%;
     background: #000;
   }
-  .lesson-video iframe, .lesson-video video {
+  .lesson-video video {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -178,12 +179,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 60px 0;
+    padding: 40px 0;
     color: #7f8c8d;
+    font-size: 0.95rem;
   }
   .spinner {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     border: 4px solid #d6dbdf;
     border-top-color: var(--blue);
@@ -339,9 +341,6 @@
     <button class="btn btn-outline btn-sm" id="adminNavBtn" style="display:none;">
       <i class="fa-solid fa-gauge"></i> لوحة التحكم
     </button>
-    <button class="btn btn-outline btn-sm" id="loginBtn">
-      <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول
-    </button>
     <button class="btn btn-danger btn-sm" id="logoutBtn" style="display:none;">
       <i class="fa-solid fa-right-from-bracket"></i> خروج
     </button>
@@ -350,7 +349,88 @@
 
 <div class="container">
 
-  <div id="sectionsView">
+  <!-- ================= AUTH VIEW (LOGIN / REGISTER / PENDING) ================= -->
+  <div id="authView" style="display: none; max-width: 450px; margin: 30px auto; padding: 10px;">
+    
+    <!-- كرت تسجيل الدخول -->
+    <div id="loginCard" class="admin-table-wrap" style="padding: 26px; border-radius: 16px;">
+      <h3 style="margin-bottom: 20px; justify-content: center;"><i class="fa-solid fa-right-to-bracket" style="color: var(--blue);"></i> تسجيل الدخول</h3>
+      <div class="error-msg" id="authLoginError"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
+      <div class="field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="authEmail" placeholder="example@email.com">
+      </div>
+      <div class="field">
+        <label>كلمة المرور</label>
+        <input type="password" id="authPassword" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" id="btnSubmitLogin" style="width:100%; justify-content: center; margin-top: 10px;">
+        <i class="fa-solid fa-sign-in"></i> دخول
+      </button>
+      <p style="text-align: center; margin-top: 18px; font-size: 0.9rem; color: #7f8c8d;">
+        ليس لديك حساب؟ <a href="#" id="toRegister" style="color: var(--blue); font-weight: bold; text-decoration: none;">أنشئ حساباً جديداً</a>
+      </p>
+    </div>
+
+    <!-- كرت إنشاء حساب جديد -->
+    <div id="registerCard" class="admin-table-wrap" style="display: none; padding: 26px; border-radius: 16px;">
+      <h3 style="margin-bottom: 20px; justify-content: center;"><i class="fa-solid fa-user-plus" style="color: var(--blue);"></i> إنشاء حساب طالب</h3>
+      <div class="error-msg" id="authRegisterError"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
+      <div class="field">
+        <label>الاسم الكامل</label>
+        <input type="text" id="regName" placeholder="الاسم والكنية">
+      </div>
+      <div class="field">
+        <label>رقم الهاتف (مع رمز البلد)</label>
+        <input type="tel" id="regPhone" placeholder="مثال: 963940174743">
+      </div>
+      <div class="field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="regEmail" placeholder="example@email.com">
+      </div>
+      <div class="field">
+        <label>كلمة المرور (6 خانات على الأقل)</label>
+        <input type="password" id="regPassword" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" id="btnSubmitRegister" style="width:100%; justify-content: center; margin-top: 10px;">
+        <i class="fa-solid fa-user-plus"></i> تسجيل الحساب
+      </button>
+      <p style="text-align: center; margin-top: 18px; font-size: 0.9rem; color: #7f8c8d;">
+        لديك حساب بالفعل؟ <a href="#" id="toLogin" style="color: var(--blue); font-weight: bold; text-decoration: none;">تسجيل الدخول</a>
+      </p>
+    </div>
+
+    <!-- كرت الانتظار والمراسلة عبر الواتساب -->
+    <div id="pendingCard" class="admin-table-wrap" style="display: none; padding: 30px 20px; border-radius: 16px; text-align: center;">
+      <i class="fa-solid fa-clock-rotate-left" style="font-size: 3.5rem; color: #f39c12; margin-bottom: 20px; display: inline-block;"></i>
+      <h3 style="justify-content: center; margin-bottom: 15px;">حسابك قيد المراجعة</h3>
+      <p style="color: #5d6d7e; margin-bottom: 20px; line-height: 1.8; font-size: 0.95rem;">
+        أهلاً بك يا <strong id="pendingUserName" style="color:var(--dark);">...</strong>. تم إنشاء حسابك بنجاح ولكنه بانتظار تفعيل الإدارة. اضغط على الزر أدناه لتطلب التفعيل مباشرة من الأستاذة رشا عبر واتساب.
+      </p>
+      <a id="btnWhatsappContact" href="#" target="_blank" class="btn" style="background: #25D366; color: white; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; margin-bottom: 12px;">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> تفعيل عبر واتساب
+      </a>
+      <button class="btn btn-gray" id="btnPendingLogout" style="width: 100%; justify-content: center;">
+        <i class="fa-solid fa-right-from-bracket"></i> إلغاء وتسجيل خروج
+      </button>
+    </div>
+
+    <!-- كرت الحظر -->
+    <div id="blockedCard" class="admin-table-wrap" style="display: none; padding: 30px 20px; border-radius: 16px; text-align: center;">
+      <i class="fa-solid fa-user-slash" style="font-size: 3.5rem; color: var(--danger); margin-bottom: 20px; display: inline-block;"></i>
+      <h3 style="justify-content: center; margin-bottom: 15px; color: var(--danger);">تم حظر الحساب</h3>
+      <p style="color: #5d6d7e; margin-bottom: 20px; line-height: 1.8;">
+        نأسف، لقد تم إيقاف أو حظر حسابك من قبل الإدارة. يرجى مراجعة المعلمة إذا كنت تعتقد أن هناك خطأً.
+      </p>
+      <button class="btn btn-gray" id="btnBlockedLogout" style="width: 100%; justify-content: center;">
+        <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ================= SECTIONS VIEW ================= -->
+  <div id="sectionsView" style="display:none;">
     <div class="search-wrap">
       <input type="text" id="searchInput" placeholder="ابحث عن قسم أو درس...">
       <i class="fa-solid fa-magnifying-glass"></i>
@@ -364,7 +444,8 @@
     </div>
   </div>
 
-  <div id="lessonsView">
+  <!-- ================= LESSONS VIEW ================= -->
+  <div id="lessonsView" style="display:none;">
     <div class="back-btn" id="backToSections"><i class="fa-solid fa-arrow-right"></i> رجوع إلى الأقسام</div>
     <h2 id="currentSectionTitle"></h2>
     <div id="lessonsList" style="margin-top:16px;"></div>
@@ -374,16 +455,26 @@
     </div>
   </div>
 
-  <div id="adminView">
+  <!-- ================= ADMIN VIEW ================= -->
+  <div id="adminView" style="display: none;">
     <h2><i class="fa-solid fa-gauge"></i> لوحة تحكم المدير</h2>
     <div class="admin-toolbar">
       <button class="btn btn-primary" id="openAddSection"><i class="fa-solid fa-folder-plus"></i> إضافة قسم</button>
       <button class="btn btn-primary" id="openAddLesson"><i class="fa-solid fa-video"></i> إضافة درس</button>
+      <button class="btn btn-gray" id="backToPublic" style="background:var(--dark); color:white;"><i class="fa-solid fa-eye"></i> معاينة الموقع</button>
     </div>
+    
+    <!-- قسم إدارة المشتركين -->
+    <div class="admin-table-wrap">
+      <h3><i class="fa-solid fa-users"></i> إدارة حسابات المشتركين والطلاب</h3>
+      <div id="adminUsersList"></div>
+    </div>
+
     <div class="admin-table-wrap">
       <h3><i class="fa-solid fa-layer-group"></i> الأقسام</h3>
       <div id="adminSectionsList"></div>
     </div>
+    
     <div class="admin-table-wrap">
       <h3><i class="fa-solid fa-video"></i> الدروس</h3>
       <div id="adminLessonsList"></div>
@@ -395,27 +486,6 @@
 <footer>© <span id="year"></span> المعلمة رشا حسن — جميع الحقوق محفوظة</footer>
 
 <!-- Modals -->
-<div class="modal-overlay" id="loginModal">
-  <div class="modal">
-    <button class="close-modal" data-close="loginModal"><i class="fa-solid fa-xmark"></i></button>
-    <h3><i class="fa-solid fa-lock"></i> تسجيل دخول المدير</h3>
-    <div class="error-msg" id="loginError"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
-    <div class="field">
-      <label>البريد الإلكتروني</label>
-      <input type="email" id="loginEmail" placeholder="admin@rasha.com">
-    </div>
-    <div class="field">
-      <label>كلمة المرور</label>
-      <input type="password" id="loginPassword" placeholder="••••••••">
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-primary" id="submitLogin" style="width:100%;justify-content:center;">
-        <i class="fa-solid fa-right-to-bracket"></i> دخول
-      </button>
-    </div>
-  </div>
-</div>
-
 <div class="modal-overlay" id="sectionModal">
   <div class="modal">
     <button class="close-modal" data-close="sectionModal"><i class="fa-solid fa-xmark"></i></button>
@@ -466,12 +536,12 @@
 
 <div class="modal-overlay" id="confirmModal">
   <div class="modal">
-    <h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);"></i> تأكيد الحذف</h3>
-    <p id="confirmText" style="color:#5d6d7e;margin-bottom:6px;">هل أنت متأكد من الحذف؟ لا يمكن التراجع عن هذا الإجراء.</p>
+    <h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);"></i> تأكيد الإجراء</h3>
+    <p id="confirmText" style="color:#5d6d7e;margin-bottom:6px;">هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء.</p>
     <div class="modal-actions">
       <button class="btn btn-gray" id="cancelDelete" style="flex:1;justify-content:center;">إلغاء</button>
       <button class="btn btn-danger" id="confirmDelete" style="flex:1;justify-content:center;">
-        <i class="fa-solid fa-trash"></i> حذف
+        تأكيد
       </button>
     </div>
   </div>
@@ -505,6 +575,7 @@ let lessons = {};
 let currentSectionId = null;
 let isAdmin = false;
 let pendingDelete = null;
+let appUsers = {};
 
 // Helpers
 function showToast(msg) {
@@ -536,33 +607,50 @@ function showFieldError(modalId, text) {
   box.classList.add('active');
 }
 
-// ✅ دالة استخراج معرف الفيديو لـ Videy بشكل متقدم للغاية ومقاوم لكل الأخطاء
+// التبديل بين الواجهات الرئيسية بأمان وثبات
+function showView(viewId) {
+  document.getElementById('authView').style.display = 'none';
+  document.getElementById('sectionsView').style.display = 'none';
+  document.getElementById('lessonsView').style.display = 'none';
+  document.getElementById('adminView').style.display = 'none';
+  
+  document.getElementById(viewId).style.display = 'block';
+}
+
+// التحكم بشاشات تسجيل الدخول والانتظار والخطأ
+function showAuthScreen(screen) {
+  showView('authView');
+  document.getElementById('loginCard').style.display = 'none';
+  document.getElementById('registerCard').style.display = 'none';
+  document.getElementById('pendingCard').style.display = 'none';
+  document.getElementById('blockedCard').style.display = 'none';
+  
+  if (screen === 'login') {
+    document.getElementById('loginCard').style.display = 'block';
+  } else if (screen === 'register') {
+    document.getElementById('registerCard').style.display = 'block';
+  } else if (screen === 'pending') {
+    document.getElementById('pendingCard').style.display = 'block';
+  } else if (screen === 'blocked') {
+    document.getElementById('blockedCard').style.display = 'block';
+  }
+}
+
+// ✅ دالة استخراج معرف الفيديو لـ Videy
 function extractVideyId(url) {
   if (!url) return null;
   url = url.trim();
   
-  // 1. استخراج الـ ID من معامل الفلترة ?id=xxxxx
   const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if (matchId) {
-    return matchId[1];
-  }
+  if (matchId) return matchId[1];
   
-  // 2. استخراج الـ ID في حال تم وضع الرابط بصيغة videy.co/xxxxxx
   const matchPath = url.match(/videy\.co\/([a-zA-Z0-9_-]+)/);
-  if (matchPath) {
-    return matchPath[1];
-  }
+  if (matchPath) return matchPath[1];
 
-  // 3. استخراج الـ ID من روابط الـ CDN المباشرة cdn.videy.co/xxxxx.mp4
   const matchCdn = url.match(/cdn\.videy\.co\/([a-zA-Z0-9_-]+)\.mp4/);
-  if (matchCdn) {
-    return matchCdn[1];
-  }
+  if (matchCdn) return matchCdn[1];
   
-  // 4. في حال أدخل المدير الـ ID فقط مباشرة وكان صالحاً
-  if (/^[a-zA-Z0-9_-]{4,20}$/.test(url)) {
-    return url;
-  }
+  if (/^[a-zA-Z0-9_-]{4,20}$/.test(url)) return url;
   
   return null;
 }
@@ -578,8 +666,11 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// جلب البيانات لمرة واحدة
+// جلب البيانات الأساسية للطلاب المصرح لهم أو المدير
 function refreshData() {
+  const user = auth.currentUser;
+  if (!user) return Promise.resolve();
+
   document.getElementById('sectionsLoading').style.display = 'flex';
   
   return Promise.all([
@@ -596,6 +687,7 @@ function refreshData() {
     if (isAdmin) {
       renderAdminSections();
       renderAdminLessons();
+      renderAdminUsers();
     }
     
     if (currentSectionId) {
@@ -606,9 +698,6 @@ function refreshData() {
     document.getElementById('sectionsLoading').innerHTML = '❌ حدث خطأ في تحميل البيانات';
   });
 }
-
-// تشغيل جلب البيانات عند بدء تحميل الصفحة
-refreshData();
 
 function lessonCountForSection(sectionId) {
   return Object.values(lessons).filter(l => l.sectionId === sectionId).length;
@@ -668,7 +757,7 @@ document.getElementById('backToSections').addEventListener('click', () => {
   document.getElementById('sectionsView').style.display = 'block';
 });
 
-// ✅ دالة رسم الدروس الاحترافية الجديدة باستخدام مشغل الـ HTML5 الأصلي
+// رسم الدروس
 function renderLessonsForSection(sectionId) {
   const list = document.getElementById('lessonsList');
   const emptyEl = document.getElementById('lessonsEmpty');
@@ -689,7 +778,6 @@ function renderLessonsForSection(sectionId) {
     const card = document.createElement('div');
     card.className = 'lesson-card';
     
-    // بناء رابط الـ CDN المباشر للفيديو بدقة عالية
     const directVideoUrl = vid ? `https://cdn.videy.co/${vid}.mp4` : '';
     
     card.innerHTML = `
@@ -710,14 +798,12 @@ function renderLessonsForSection(sectionId) {
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button class="btn btn-primary btn-sm play-btn" data-id="${id}"><i class="fa-solid fa-play"></i> تشغيل</button>
-            <button class="btn btn-gray btn-sm share-btn" data-id="${id}"><i class="fa-solid fa-share-nodes"></i> مشاركة</button>
           </div>
         </div>
       </div>
     `;
     list.appendChild(card);
 
-    // ربط المشغل البرمجي وزيادة المشاهدات عند التفاعل الفعلي
     const videoEl = document.getElementById(`video-${id}`);
     const playBtn = card.querySelector('.play-btn');
 
@@ -727,28 +813,20 @@ function renderLessonsForSection(sectionId) {
           db.ref('lessons/' + id + '/views').transaction(v => (v || 0) + 1, (error, committed, snapshot) => {
             if (committed && snapshot !== null) {
               const countText = document.getElementById(`views-count-${id}`);
-              if (countText) {
-                countText.textContent = snapshot.val();
-              }
+              if (countText) countText.textContent = snapshot.val();
             }
           });
           playBtn.dataset.counted = 'true';
         }
       };
 
-      // الضغط على زر التشغيل الخارجي لبطاقة الدرس
       playBtn.addEventListener('click', () => {
-        if (videoEl.paused) {
-          videoEl.play();
-        } else {
-          videoEl.pause();
-        }
+        if (videoEl.paused) videoEl.play(); else videoEl.pause();
       });
 
-      // مزامنة أزرار التحكم لتغيير نصوص التشغيل/الإيقاف المؤقت بشكل طبيعي
       videoEl.addEventListener('play', () => {
         playBtn.innerHTML = '<i class="fa-solid fa-pause"></i> إيقاف مؤقت';
-        incrementView(); // يتم تسجيل المشاهدة بمجرد بدء البث الفعلي للفيديو
+        incrementView();
       });
 
       videoEl.addEventListener('pause', () => {
@@ -756,95 +834,292 @@ function renderLessonsForSection(sectionId) {
       });
     }
   });
-
-  // زر مشاركة الدرس
-  list.querySelectorAll('.share-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      const url = `${location.origin}${location.pathname}#lesson=${id}`;
-      navigator.clipboard.writeText(url).then(() => {
-        showToast('تم نسخ رابط الدرس بنجاح');
-      }).catch(() => {
-        showToast('تعذر نسخ الرابط');
-      });
-    });
-  });
 }
 
-// Auth
-document.getElementById('loginBtn').addEventListener('click', () => openModal('loginModal'));
+// ================= AUTHENTICATION LOGIC =================
 
-document.getElementById('submitLogin').addEventListener('click', () => {
-  const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPassword').value;
+// التحويل بين شاشتي تسجيل الدخول والتسجيل
+document.getElementById('toRegister').addEventListener('click', (e) => {
+  e.preventDefault();
+  showAuthScreen('register');
+});
+document.getElementById('toLogin').addEventListener('click', (e) => {
+  e.preventDefault();
+  showAuthScreen('login');
+});
+
+// أزرار تسجيل الخروج
+document.getElementById('btnPendingLogout').addEventListener('click', () => auth.signOut());
+document.getElementById('btnBlockedLogout').addEventListener('click', () => auth.signOut());
+document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
+
+// تسجيل الدخول
+document.getElementById('btnSubmitLogin').addEventListener('click', () => {
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const errBox = document.getElementById('authLoginError');
+  errBox.classList.remove('active');
 
   if (!email || !password) {
-    showFieldError('loginModal', 'الرجاء إدخال البريد الإلكتروني وكلمة المرور');
-    return;
-  }
-  if (!isValidEmail(email)) {
-    showFieldError('loginModal', 'صيغة البريد الإلكتروني غير صحيحة');
+    errBox.querySelector('span').textContent = 'الرجاء إدخال البريد الإلكتروني وكلمة المرور';
+    errBox.classList.add('active');
     return;
   }
 
   auth.signInWithEmailAndPassword(email, password)
     .then(() => {
-      closeModal('loginModal');
-      document.getElementById('loginEmail').value = '';
-      document.getElementById('loginPassword').value = '';
+      document.getElementById('authEmail').value = '';
+      document.getElementById('authPassword').value = '';
       showToast('تم تسجيل الدخول بنجاح');
     })
     .catch(err => {
       let msg = 'حدث خطأ أثناء تسجيل الدخول';
-      if (err.code === 'auth/user-not-found') msg = 'هذا البريد الإلكتروني غير مسجل';
-      else if (err.code === 'auth/wrong-password') msg = 'كلمة المرور غير صحيحة';
-      else if (err.code === 'auth/invalid-email') msg = 'صيغة البريد الإلكتروني غير صحيحة';
-      else if (err.code === 'auth/too-many-requests') msg = 'محاولات كثيرة جدًا، حاول لاحقًا';
-      else if (err.code === 'auth/invalid-credential') msg = 'بيانات الدخول غير صحيحة';
-      showFieldError('loginModal', msg);
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+        msg = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+      } else if (err.code === 'auth/invalid-email') {
+        msg = 'صيغة البريد الإلكتروني غير صحيحة';
+      } else if (err.code === 'auth/too-many-requests') {
+        msg = 'محاولات كثيرة خاطئة، تم قفل الحساب مؤقتاً';
+      }
+      errBox.querySelector('span').textContent = msg;
+      errBox.classList.add('active');
     });
 });
 
-document.getElementById('logoutBtn').addEventListener('click', () => {
-  auth.signOut().then(() => {
-    showToast('تم تسجيل الخروج');
-    goToPublicView();
-  });
+// إنشاء الحساب للطلاب
+document.getElementById('btnSubmitRegister').addEventListener('click', () => {
+  const name = document.getElementById('regName').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const errBox = document.getElementById('authRegisterError');
+  errBox.classList.remove('active');
+
+  if (!name || !phone || !email || !password) {
+    errBox.querySelector('span').textContent = 'يرجى تعبئة جميع الحقول';
+    errBox.classList.add('active');
+    return;
+  }
+  if (!isValidEmail(email)) {
+    errBox.querySelector('span').textContent = 'صيغة البريد الإلكتروني غير صحيحة';
+    errBox.classList.add('active');
+    return;
+  }
+  if (password.length < 6) {
+    errBox.querySelector('span').textContent = 'يجب أن تكون كلمة المرور 6 أحرف أو أكثر';
+    errBox.classList.add('active');
+    return;
+  }
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then((cred) => {
+      const userData = {
+        name: name,
+        email: email,
+        phone: phone,
+        role: 'user',
+        status: 'pending',
+        createdAt: Date.now()
+      };
+      return db.ref('users/' + cred.user.uid).set(userData);
+    })
+    .then(() => {
+      document.getElementById('regName').value = '';
+      document.getElementById('regPhone').value = '';
+      document.getElementById('regEmail').value = '';
+      document.getElementById('regPassword').value = '';
+      showToast('تم تسجيل الحساب بنجاح! تواصل معنا للتفعيل');
+    })
+    .catch(err => {
+      let msg = 'حدث خطأ أثناء إنشاء الحساب';
+      if (err.code === 'auth/email-already-in-use') {
+        msg = 'هذا البريد الإلكتروني مستخدم بالفعل للحب';
+      } else if (err.code === 'auth/invalid-email') {
+        msg = 'صيغة البريد الإلكتروني غير صحيحة';
+      } else if (err.code === 'auth/weak-password') {
+        msg = 'كلمة المرور ضعيفة جداً';
+      }
+      errBox.querySelector('span').textContent = msg;
+      errBox.classList.add('active');
+    });
 });
 
-document.getElementById('adminNavBtn').addEventListener('click', () => goToAdminView());
-
+// مراقبة حالة جلسة المستخدم وإعطاء الصلاحيات المناسبة
 auth.onAuthStateChanged(user => {
   if (user) {
-    isAdmin = true;
-    document.getElementById('loginBtn').style.display = 'none';
-    document.getElementById('logoutBtn').style.display = 'inline-flex';
-    document.getElementById('adminNavBtn').style.display = 'inline-flex';
-    goToAdminView();
+    // ✅ تم تحديث بريد الأدمن البرمجي هنا ليتوافق مع فايربيس
+    const isAdminEmail = (user.email && user.email.toLowerCase() === 'admin@mnm.com');
+    
+    db.ref('users/' + user.uid).once('value').then(snap => {
+      let userData = snap.val();
+      
+      // حماية حساب المدير وإنشاؤه تلقائياً إذا كان أول تسجيل له
+      if (isAdminEmail) {
+        if (!userData) {
+          userData = {
+            name: "المديرة رشا حسن",
+            email: user.email,
+            role: "admin",
+            status: "approved",
+            createdAt: Date.now()
+          };
+          db.ref('users/' + user.uid).set(userData);
+        }
+        isAdmin = true;
+        document.getElementById('logoutBtn').style.display = 'inline-flex';
+        document.getElementById('adminNavBtn').style.display = 'inline-flex';
+        goToAdminView();
+        refreshData();
+        return;
+      }
+      
+      // معالجة حساب الطالب العادي
+      if (userData) {
+        if (userData.role === 'admin') {
+          isAdmin = true;
+          document.getElementById('logoutBtn').style.display = 'inline-flex';
+          document.getElementById('adminNavBtn').style.display = 'inline-flex';
+          goToAdminView();
+          refreshData();
+        } else {
+          isAdmin = false;
+          document.getElementById('adminNavBtn').style.display = 'none';
+          
+          if (userData.status === 'approved') {
+            document.getElementById('logoutBtn').style.display = 'inline-flex';
+            goToPublicView();
+            refreshData();
+          } else if (userData.status === 'blocked') {
+            document.getElementById('logoutBtn').style.display = 'none';
+            showAuthScreen('blocked');
+          } else {
+            // معلق (Pending)
+            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('pendingUserName').textContent = userData.name || '';
+            
+            // إنشاء رابط المراسلة عبر الواتساب تلقائياً مع تفاصيل الحساب
+            const encodedMsg = encodeURIComponent(`مرحباً أستاذة رشا، لقد قمت بالتسجيل في المنصة التعليمية باسم (${userData.name}) وأريد تفعيل اشتراكي وحسابي من فضلك.`);
+            document.getElementById('btnWhatsappContact').href = `https://api.whatsapp.com/send?phone=963940174743&text=${encodedMsg}`;
+            
+            showAuthScreen('pending');
+          }
+        }
+      } else {
+        // حماية عند حدوث خلل في قاعدة البيانات
+        isAdmin = false;
+        document.getElementById('logoutBtn').style.display = 'none';
+        showAuthScreen('pending');
+      }
+    }).catch(err => {
+      console.error("خطأ أثناء جلب تفاصيل الحساب:", err);
+      auth.signOut();
+    });
   } else {
     isAdmin = false;
-    document.getElementById('loginBtn').style.display = 'inline-flex';
     document.getElementById('logoutBtn').style.display = 'none';
     document.getElementById('adminNavBtn').style.display = 'none';
-    goToPublicView();
+    showAuthScreen('login');
   }
 });
 
 function goToAdminView() {
-  document.getElementById('sectionsView').style.display = 'none';
-  document.getElementById('lessonsView').style.display = 'none';
-  document.getElementById('adminView').style.display = 'block';
+  showView('adminView');
   renderAdminSections();
   renderAdminLessons();
+  renderAdminUsers();
 }
 
 function goToPublicView() {
-  document.getElementById('adminView').style.display = 'none';
-  document.getElementById('lessonsView').style.display = 'none';
-  document.getElementById('sectionsView').style.display = 'block';
+  showView('sectionsView');
 }
 
-// Admin Sections
+// معاينة الموقع من الإدارة
+document.getElementById('backToPublic').addEventListener('click', () => {
+  goToPublicView();
+});
+
+// ================= CONTROLLING USERS (ADMIN PANEL) =================
+
+function renderAdminUsers() {
+  const wrap = document.getElementById('adminUsersList');
+  wrap.innerHTML = '<div class="spinner-wrap"><div class="spinner"></div>جارِ تحميل المستخدمين...</div>';
+  
+  db.ref('users').once('value').then(snap => {
+    appUsers = snap.val() || {};
+    wrap.innerHTML = '';
+    
+    // فلترة حساب الإدارة حتى لا يظهر في إدارة الطلاب
+    const entries = Object.entries(appUsers).filter(([uid, u]) => u.role !== 'admin');
+    
+    if (entries.length === 0) {
+      wrap.innerHTML = '<p style="color:#95a5a6; text-align: center; padding: 10px;">لا يوجد مستخدمون مسجلون حالياً</p>';
+      return;
+    }
+    
+    entries.forEach(([uid, u]) => {
+      const row = document.createElement('div');
+      row.className = 'admin-row';
+      
+      let statusBadge = '';
+      let actionButton = '';
+      
+      if (u.status === 'pending') {
+        statusBadge = '<span style="background: #f39c12; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">قيد الانتظار</span>';
+        actionButton = `<button class="btn btn-primary btn-sm user-action-btn" data-uid="${uid}" data-action="approve"><i class="fa-solid fa-check"></i> قبول التفعيل</button>`;
+      } else if (u.status === 'approved') {
+        statusBadge = '<span style="background: #2ecc71; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">نشط / مقبول</span>';
+        actionButton = `<button class="btn btn-danger btn-sm user-action-btn" data-uid="${uid}" data-action="block"><i class="fa-solid fa-ban"></i> حظر</button>`;
+      } else if (u.status === 'blocked') {
+        statusBadge = '<span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">محظور</span>';
+        actionButton = `<button class="btn btn-primary btn-sm user-action-btn" data-uid="${uid}" data-action="approve"><i class="fa-solid fa-check"></i> إلغاء الحظر</button>`;
+      }
+      
+      row.innerHTML = `
+        <div class="info">
+          <strong>${escapeHtml(u.name || '')} ${statusBadge}</strong>
+          <small>الهاتف: ${escapeHtml(u.phone || 'غير معروف')} | البريد: ${escapeHtml(u.email || '')}</small>
+        </div>
+        <div class="actions">
+          ${actionButton}
+          <button class="btn btn-danger btn-sm delete-user-btn" data-uid="${uid}"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+      wrap.appendChild(row);
+    });
+    
+    // ربط مستمعات الأحداث لعمليات الطلاب
+    wrap.querySelectorAll('.user-action-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const uid = btn.dataset.uid;
+        const action = btn.dataset.action;
+        const newStatus = (action === 'approve') ? 'approved' : 'blocked';
+        
+        db.ref('users/' + uid).update({ status: newStatus })
+          .then(() => {
+            showToast(action === 'approve' ? 'تم تفعيل حساب المشترك بنجاح' : 'تم حظر حساب المشترك');
+            renderAdminUsers();
+          })
+          .catch(() => showToast('حدث خطأ أثناء تعديل حالة المشترك'));
+      });
+    });
+    
+    wrap.querySelectorAll('.delete-user-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const uid = btn.dataset.uid;
+        pendingDelete = { type: 'user', id: uid };
+        document.getElementById('confirmText').textContent = `هل أنت متأكد من حذف حساب المشترك (${appUsers[uid]?.name || ''}) نهائياً؟`;
+        openModal('confirmModal');
+      });
+    });
+    
+  }).catch(err => {
+    console.error("Error loading users:", err);
+    wrap.innerHTML = '<p style="color:var(--danger);">❌ فشل في تحميل المشتركين</p>';
+  });
+}
+
+// ================= CONTROL SECTIONS (ADMIN PANEL) =================
+
 document.getElementById('openAddSection').addEventListener('click', () => {
   document.getElementById('sectionModalTitle').innerHTML = '<i class="fa-solid fa-folder-plus"></i> إضافة قسم';
   document.getElementById('sectionId').value = '';
@@ -915,7 +1190,8 @@ function renderAdminSections() {
   });
 }
 
-// Admin Lessons
+// ================= CONTROL LESSONS (ADMIN PANEL) =================
+
 function populateSectionSelect() {
   const select = document.getElementById('lessonSection');
   const current = select.value;
@@ -1027,7 +1303,8 @@ function renderAdminLessons() {
   });
 }
 
-// Confirm Delete
+// ================= CONFIRM DELETE / ACTIONS =================
+
 document.getElementById('cancelDelete').addEventListener('click', () => {
   pendingDelete = null;
   closeModal('confirmModal');
@@ -1049,6 +1326,10 @@ document.getElementById('confirmDelete').addEventListener('click', () => {
   } else if (pendingDelete.type === 'lesson') {
     db.ref('lessons/' + pendingDelete.id).remove()
       .then(() => { refreshData(); showToast('تم حذف الدرس بنجاح'); })
+      .catch(() => showToast('تعذر الحذف، تحقق من صلاحياتك'));
+  } else if (pendingDelete.type === 'user') {
+    db.ref('users/' + pendingDelete.id).remove()
+      .then(() => { renderAdminUsers(); showToast('تم حذف حساب المشترك بنجاح'); })
       .catch(() => showToast('تعذر الحذف، تحقق من صلاحياتك'));
   }
 
