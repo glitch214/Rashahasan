@@ -5,17 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>المعلمة رشا حسن | منصة تعليمية تفاعلية</title>
 
-    <!-- تحسين الاتصال بموقع Videy -->
-    <link rel="preconnect" href="https://cdn.videy.co" />
-    <link rel="dns-prefetch" href="https://cdn.videy.co" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <style>
         /* ============================================================
-               VARIABLES & THEMES (الثيمات)
+               VARIABLES & THEMES
                ============================================================ */
         :root {
             --font: 'Cairo', sans-serif;
@@ -24,7 +20,6 @@
             --transition: 0.25s ease;
         }
 
-        /* ----- الثيم الافتراضي (فاتح) ----- */
         [data-theme="light"] {
             --bg: #f5f7fb;
             --surface: #ffffff;
@@ -35,17 +30,17 @@
             --primary-hover: #1555c4;
             --primary-soft: rgba(30, 110, 240, 0.08);
             --border: #e9edf4;
-            --shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
             --header-bg: #ffffff;
             --hero-start: #1e6ef0;
             --hero-end: #3b82f6;
-            --card-hover: #f1f5f9;
             --badge-pending: #f59e0b;
             --badge-approved: #22c55e;
             --badge-blocked: #ef4444;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
-        /* ----- الثيم الداكن ----- */
         [data-theme="dark"] {
             --bg: #0f172a;
             --surface: #1e293b;
@@ -56,17 +51,17 @@
             --primary-hover: #3b82f6;
             --primary-soft: rgba(96, 165, 250, 0.12);
             --border: #334155;
-            --shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
             --header-bg: #1e293b;
             --hero-start: #1e3a5f;
             --hero-end: #2563eb;
-            --card-hover: #2d3a4f;
             --badge-pending: #f59e0b;
             --badge-approved: #22c55e;
             --badge-blocked: #ef4444;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
-        /* ----- الثيم الأزرق ----- */
         [data-theme="blue"] {
             --bg: #e8f0fe;
             --surface: #ffffff;
@@ -77,17 +72,17 @@
             --primary-hover: #0a3a8a;
             --primary-soft: rgba(13, 71, 161, 0.08);
             --border: #c5d5ea;
-            --shadow: 0 6px 24px rgba(13, 71, 161, 0.06);
             --header-bg: #ffffff;
             --hero-start: #0d47a1;
             --hero-end: #1976d2;
-            --card-hover: #e3edfb;
             --badge-pending: #f59e0b;
             --badge-approved: #22c55e;
             --badge-blocked: #ef4444;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
-        /* ----- الثيم النيون ----- */
         [data-theme="neon"] {
             --bg: #0b0d17;
             --surface: #151a2e;
@@ -98,14 +93,15 @@
             --primary-hover: #6d28d9;
             --primary-soft: rgba(124, 58, 237, 0.15);
             --border: #2d3566;
-            --shadow: 0 6px 24px rgba(124, 58, 237, 0.08);
             --header-bg: #11162b;
             --hero-start: #4c1d95;
             --hero-end: #7c3aed;
-            --card-hover: #1f2642;
             --badge-pending: #f59e0b;
             --badge-approved: #22c55e;
             --badge-blocked: #ef4444;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
         /* ============================================================
@@ -176,7 +172,6 @@
             flex-wrap: wrap;
         }
 
-        /* ----- أزرار الثيم ----- */
         .theme-toggle-wrap {
             display: flex;
             gap: 6px;
@@ -266,6 +261,20 @@
             color: var(--bg);
         }
 
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            opacity: 0.9;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* ============================================================
                CONTAINER
                ============================================================ */
@@ -276,7 +285,7 @@
         }
 
         /* ============================================================
-               LANDING (الصفحة التعريفية)
+               LANDING
                ============================================================ */
         .hero {
             background: linear-gradient(135deg, var(--hero-start), var(--hero-end));
@@ -332,16 +341,6 @@
             background: rgba(255, 255, 255, 0.10);
         }
 
-        .hero-illustration {
-            max-width: 200px;
-            border-radius: 12px;
-            opacity: 0.9;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            display: none;
-            /* تم إزالة الصور */;
-        }
-
-        /* --- إحصائيات وهمية --- */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -388,7 +387,6 @@
             color: var(--text-soft);
         }
 
-        /* --- مميزات المنصة --- */
         .features-title {
             text-align: center;
             font-size: 1.5rem;
@@ -443,7 +441,7 @@
         }
 
         /* ============================================================
-               MAIN UI (بعد تسجيل الدخول)
+               WELCOME BANNER
                ============================================================ */
         .welcome-banner {
             background: linear-gradient(135deg, var(--hero-start), var(--hero-end));
@@ -513,7 +511,7 @@
         }
 
         /* ============================================================
-               SECTIONS GRID (بدون صور)
+               SECTIONS GRID
                ============================================================ */
         .section-header {
             display: flex;
@@ -543,7 +541,7 @@
         .section-card {
             background: var(--surface);
             border-radius: var(--radius);
-            padding: 24px 20px 20px;
+            padding: 20px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             cursor: pointer;
@@ -558,6 +556,15 @@
             transform: translateY(-4px);
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
             border-color: var(--primary);
+        }
+
+        .section-card .sec-image {
+            width: 100%;
+            height: 140px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 14px;
+            background: var(--primary-soft);
         }
 
         .section-card .sec-icon {
@@ -616,7 +623,6 @@
             background: var(--surface-2);
         }
 
-        /* ----- درس فردي ----- */
         .lesson-card {
             background: var(--surface);
             border-radius: var(--radius);
@@ -640,6 +646,14 @@
             height: 100%;
             border: 0;
             background: #0a0a0a;
+        }
+
+        .lesson-thumbnail {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .lesson-body {
@@ -743,7 +757,7 @@
         }
 
         /* ============================================================
-               DISCUSSION (التعليقات)
+               DISCUSSION
                ============================================================ */
         .discussion-box {
             background: var(--surface-2);
@@ -907,7 +921,7 @@
         }
 
         /* ============================================================
-               AUTH VIEW
+               AUTH
                ============================================================ */
         #authView {
             max-width: 440px;
@@ -1010,7 +1024,7 @@
         }
 
         /* ============================================================
-               ADMIN VIEW
+               ADMIN
                ============================================================ */
         #adminView {
             display: none;
@@ -1076,6 +1090,155 @@
         }
 
         /* ============================================================
+               UPLOAD - Firebase Storage
+               ============================================================ */
+        .upload-container {
+            margin: 10px 0;
+        }
+
+        .upload-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 30px 20px;
+            text-align: center;
+            transition: var(--transition);
+            background: var(--surface-2);
+            cursor: pointer;
+            position: relative;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drop-zone:hover {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .drop-zone.drag-over {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+            transform: scale(1.02);
+        }
+
+        .drop-zone.uploading {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .drop-zone .upload-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .drop-zone p {
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .drop-zone .file-hint {
+            color: var(--text-soft);
+            font-size: 0.8rem;
+        }
+
+        .upload-progress {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-soft);
+        }
+
+        .uploaded-preview {
+            margin-top: 10px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .uploaded-preview img,
+        .uploaded-preview video {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .uploaded-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--surface-2);
+            border-top: 1px solid var(--border);
+        }
+
+        .uploaded-info .success-icon {
+            color: var(--success);
+            margin-left: 6px;
+        }
+
+        .btn-remove-file {
+            color: var(--danger);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-remove-file:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .upload-error {
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--danger);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            border: 1px solid rgba(239, 68, 68, 0.15);
+        }
+
+        .upload-error .error-icon {
+            font-size: 1.1rem;
+        }
+
+        /* ============================================================
                MODALS
                ============================================================ */
         .modal-overlay {
@@ -1098,7 +1261,7 @@
             background: var(--surface);
             border-radius: var(--radius);
             width: 100%;
-            max-width: 440px;
+            max-width: 520px;
             padding: 28px 24px;
             max-height: 90vh;
             overflow-y: auto;
@@ -1291,14 +1454,12 @@
             <span>منصة رشا حسن</span>
         </div>
         <div class="header-actions">
-            <!-- أزرار الثيمات -->
             <div class="theme-toggle-wrap" id="themeToggleWrap">
                 <button class="theme-btn active" data-theme="light" title="فاتح">☀️</button>
                 <button class="theme-btn" data-theme="dark" title="داكن">🌙</button>
                 <button class="theme-btn" data-theme="blue" title="أزرق">🌊</button>
                 <button class="theme-btn" data-theme="neon" title="نيون">💜</button>
             </div>
-
             <button class="btn btn-outline btn-sm" id="adminNavBtn" style="display:none;">
                 <i class="fa-solid fa-gauge"></i> لوحة التحكم
             </button>
@@ -1315,7 +1476,6 @@
 
         <!-- ================= LANDING VIEW ================= -->
         <div id="landingView" style="display: none;">
-
             <div class="hero">
                 <div class="hero-content">
                     <h1>📚 منصّة المعلمة رشا حسن</h1>
@@ -1325,18 +1485,16 @@
                         <button class="btn btn-outline" id="landingToLogin"><i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول</button>
                     </div>
                 </div>
-                <!-- تم إزالة الصورة -->
             </div>
 
-            <!-- إحصائيات -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
-                    <div class="stat-info"><h4>+500</h4><span>طالب متفوق</span></div>
+                    <div class="stat-info"><h4 id="statUsers">+0</h4><span>طالب متفوق</span></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fa-solid fa-circle-play"></i></div>
-                    <div class="stat-info"><h4>+120</h4><span>محاضرة فيديو</span></div>
+                    <div class="stat-info"><h4 id="statVideos">+0</h4><span>محاضرة فيديو</span></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
@@ -1344,7 +1502,6 @@
                 </div>
             </div>
 
-            <!-- مميزات -->
             <h2 class="features-title">⭐ لماذا تنضم إلى منصتنا؟</h2>
             <div class="features-grid">
                 <div class="feature-card">
@@ -1363,13 +1520,10 @@
                     <p>مشغلات فيديو سريعة لمتابعة الدروس دون تقطيع.</p>
                 </div>
             </div>
-
         </div>
 
         <!-- ================= AUTH VIEW ================= -->
         <div id="authView" style="display: none;">
-
-            <!-- تسجيل الدخول -->
             <div id="loginCard" class="auth-card">
                 <h3><i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول</h3>
                 <div class="error-msg" id="authLoginError"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
@@ -1384,15 +1538,10 @@
                 <button class="btn btn-primary" id="btnSubmitLogin" style="width:100%; justify-content:center; margin-top:6px;">
                     <i class="fa-solid fa-sign-in"></i> دخول
                 </button>
-                <div class="auth-link">
-                    ليس لديك حساب؟ <a href="#" id="toRegister">أنشئ حساباً جديداً</a>
-                </div>
-                <div class="auth-link" style="margin-top:6px;">
-                    <a href="#" id="backToLandingFromLogin"><i class="fa-solid fa-arrow-left"></i> رجوع للرئيسية</a>
-                </div>
+                <div class="auth-link">ليس لديك حساب؟ <a href="#" id="toRegister">أنشئ حساباً جديداً</a></div>
+                <div class="auth-link"><a href="#" id="backToLandingFromLogin"><i class="fa-solid fa-arrow-left"></i> رجوع للرئيسية</a></div>
             </div>
 
-            <!-- إنشاء حساب -->
             <div id="registerCard" class="auth-card" style="display: none;">
                 <h3><i class="fa-solid fa-user-plus"></i> إنشاء حساب طالب</h3>
                 <div class="error-msg" id="authRegisterError"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
@@ -1415,15 +1564,10 @@
                 <button class="btn btn-primary" id="btnSubmitRegister" style="width:100%; justify-content:center; margin-top:6px;">
                     <i class="fa-solid fa-user-plus"></i> تسجيل الحساب
                 </button>
-                <div class="auth-link">
-                    لديك حساب؟ <a href="#" id="toLogin">تسجيل الدخول</a>
-                </div>
-                <div class="auth-link" style="margin-top:6px;">
-                    <a href="#" id="backToLandingFromReg"><i class="fa-solid fa-arrow-left"></i> رجوع للرئيسية</a>
-                </div>
+                <div class="auth-link">لديك حساب؟ <a href="#" id="toLogin">تسجيل الدخول</a></div>
+                <div class="auth-link"><a href="#" id="backToLandingFromReg"><i class="fa-solid fa-arrow-left"></i> رجوع للرئيسية</a></div>
             </div>
 
-            <!-- قيد الانتظار -->
             <div id="pendingCard" class="auth-card" style="display: none; text-align:center;">
                 <i class="fa-solid fa-clock-rotate-left" style="font-size:3rem; color:#f59e0b; margin-bottom:16px;"></i>
                 <h3>حسابك قيد المراجعة</h3>
@@ -1438,7 +1582,6 @@
                 </button>
             </div>
 
-            <!-- محظور -->
             <div id="blockedCard" class="auth-card" style="display: none; text-align:center;">
                 <i class="fa-solid fa-user-slash" style="font-size:3rem; color:#ef4444; margin-bottom:16px;"></i>
                 <h3 style="color:#ef4444;">تم حظر الحساب</h3>
@@ -1447,12 +1590,10 @@
                     <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
                 </button>
             </div>
-
         </div>
 
-        <!-- ================= MAIN HOME VIEW ================= -->
+        <!-- ================= SECTIONS VIEW ================= -->
         <div id="sectionsView" style="display:none;">
-
             <div class="welcome-banner">
                 <h1>مرحباً بك يا <span id="studentName">الطالب</span> 👋</h1>
                 <p>هنا تجد جميع الدروس والمحاضرات المنظمة لدعم رحلتك التعليمية.</p>
@@ -1551,6 +1692,28 @@
                 <label>اسم القسم</label>
                 <input type="text" id="sectionName" placeholder="مثال: اللغة العربية" />
             </div>
+            <!-- رفع صورة القسم -->
+            <div class="upload-container" id="sectionImageUpload">
+                <label class="upload-label">صورة القسم (اختياري)</label>
+                <div class="drop-zone" id="sectionImageDrop">
+                    <i class="fa-solid fa-image upload-icon"></i>
+                    <p>اسحب الصورة هنا أو انقر للاختيار</p>
+                    <span class="file-hint">PNG, JPG • حتى 5MB</span>
+                    <input type="file" id="sectionImageInput" accept="image/*" style="display:none;" />
+                </div>
+                <div id="sectionImagePreview" style="display:none;" class="uploaded-preview">
+                    <img id="sectionImagePreviewImg" src="" alt="صورة القسم" />
+                    <div class="uploaded-info">
+                        <span><i class="fa-solid fa-check-circle success-icon"></i> تم الرفع</span>
+                        <button class="btn-remove-file" id="sectionImageRemove"><i class="fa-solid fa-trash"></i> إزالة</button>
+                    </div>
+                </div>
+                <input type="hidden" id="sectionImageUrl" />
+                <div id="sectionImageError" class="upload-error" style="display:none;">
+                    <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                    <span></span>
+                </div>
+            </div>
             <div class="modal-actions">
                 <button class="btn btn-primary" id="submitSection" style="flex:1;justify-content:center;">
                     <i class="fa-solid fa-floppy-disk"></i> حفظ القسم
@@ -1575,12 +1738,52 @@
                 <input type="text" id="lessonTitle" placeholder="مثال: حل المسألة الأولى" />
             </div>
             <div class="field">
-                <label>رابط فيديو Videy</label>
-                <input type="text" id="lessonUrl" placeholder="أدخل الرابط أو المعرف" />
-            </div>
-            <div class="field">
                 <label>وصف الدرس</label>
                 <textarea id="lessonDesc" placeholder="اكتب ملخصاً أو محاور الفيديو..."></textarea>
+            </div>
+            <!-- رفع فيديو الدرس -->
+            <div class="upload-container" id="lessonVideoUpload">
+                <label class="upload-label">فيديو الدرس *</label>
+                <div class="drop-zone" id="lessonVideoDrop">
+                    <i class="fa-solid fa-video upload-icon"></i>
+                    <p>اسحب الفيديو هنا أو انقر للاختيار</p>
+                    <span class="file-hint">MP4, WebM • حتى 100MB</span>
+                    <input type="file" id="lessonVideoInput" accept="video/*" style="display:none;" />
+                </div>
+                <div id="lessonVideoPreview" style="display:none;" class="uploaded-preview">
+                    <video id="lessonVideoPreviewVideo" controls></video>
+                    <div class="uploaded-info">
+                        <span><i class="fa-solid fa-check-circle success-icon"></i> تم الرفع</span>
+                        <button class="btn-remove-file" id="lessonVideoRemove"><i class="fa-solid fa-trash"></i> إزالة</button>
+                    </div>
+                </div>
+                <input type="hidden" id="lessonVideoUrl" />
+                <div id="lessonVideoError" class="upload-error" style="display:none;">
+                    <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                    <span></span>
+                </div>
+            </div>
+            <!-- رفع صورة مصغرة للدرس -->
+            <div class="upload-container" id="lessonThumbnailUpload">
+                <label class="upload-label">صورة مصغرة للدرس (اختياري)</label>
+                <div class="drop-zone" id="lessonThumbnailDrop">
+                    <i class="fa-solid fa-image upload-icon"></i>
+                    <p>اسحب الصورة هنا أو انقر للاختيار</p>
+                    <span class="file-hint">PNG, JPG • حتى 5MB</span>
+                    <input type="file" id="lessonThumbnailInput" accept="image/*" style="display:none;" />
+                </div>
+                <div id="lessonThumbnailPreview" style="display:none;" class="uploaded-preview">
+                    <img id="lessonThumbnailPreviewImg" src="" alt="صورة مصغرة" />
+                    <div class="uploaded-info">
+                        <span><i class="fa-solid fa-check-circle success-icon"></i> تم الرفع</span>
+                        <button class="btn-remove-file" id="lessonThumbnailRemove"><i class="fa-solid fa-trash"></i> إزالة</button>
+                    </div>
+                </div>
+                <input type="hidden" id="lessonThumbnailUrl" />
+                <div id="lessonThumbnailError" class="upload-error" style="display:none;">
+                    <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                    <span></span>
+                </div>
             </div>
             <div class="modal-actions">
                 <button class="btn btn-primary" id="submitLesson" style="flex:1;justify-content:center;">
@@ -1614,6 +1817,8 @@
     </script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js">
     </script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js">
+    </script>
 
     <script>
         // ============================================================
@@ -1632,6 +1837,7 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.database();
+        const storage = firebase.storage();
 
         // ============================================================
         // STATE
@@ -1643,9 +1849,6 @@
         let pendingDelete = null;
         let appUsers = {};
         let activeCommentsListeners = {};
-        let currentUserLikes = {}; // تخزين الإعجابات الحالية للمستخدم
-
-        const defaultSectionImg = ""; // تم إزالة الصور
 
         // ============================================================
         // HELPERS
@@ -1657,7 +1860,9 @@
             setTimeout(() => toast.classList.remove('show'), 2600);
         }
 
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
 
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
@@ -1668,6 +1873,7 @@
         document.querySelectorAll('[data-close]').forEach(btn => {
             btn.addEventListener('click', () => closeModal(btn.dataset.close));
         });
+
         document.querySelectorAll('.modal-overlay').forEach(overlay => {
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) closeModal(overlay.id);
@@ -1700,21 +1906,6 @@
             else if (screen === 'blocked') document.getElementById('blockedCard').style.display = 'block';
         }
 
-        function extractVideyId(url) {
-            if (!url) return null;
-            url = url.trim();
-            const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-            if (matchId) return matchId[1];
-            const matchPath = url.match(/videy\.co\/([a-zA-Z0-9_-]+)/);
-            if (matchPath) return matchPath[1];
-            const matchCdn = url.match(/cdn\.videy\.co\/([a-zA-Z0-9_-]+)\.mp4/);
-            if (matchCdn) return matchCdn[1];
-            if (/^[a-zA-Z0-9_-]{4,20}$/.test(url)) return url;
-            return null;
-        }
-
-        function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
-
         function escapeHtml(str) {
             if (!str) return '';
             const div = document.createElement('div');
@@ -1730,7 +1921,7 @@
         }
 
         // ============================================================
-        // THEME SYSTEM (نظام الثيمات)
+        // THEME SYSTEM
         // ============================================================
         const themeBtns = document.querySelectorAll('.theme-btn');
         const currentTheme = localStorage.getItem('theme') || 'light';
@@ -1742,13 +1933,438 @@
                 btn.classList.toggle('active', btn.dataset.theme === theme);
             });
         }
-
         themeBtns.forEach(btn => {
             btn.addEventListener('click', () => setTheme(btn.dataset.theme));
         });
-
-        // تطبيق الثيم المحفوظ
         setTheme(currentTheme);
+
+        // ============================================================
+        // FIREBASE STORAGE UPLOAD HELPERS
+        // ============================================================
+        function uploadFileToStorage(file, path, onProgress) {
+            return new Promise((resolve, reject) => {
+                const storageRef = storage.ref(path);
+                const uploadTask = storageRef.put(file);
+
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        if (onProgress) {
+                            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) *
+                            100);
+                            onProgress(progress);
+                        }
+                    },
+                    (error) => {
+                        reject(error);
+                    },
+                    async () => {
+                        try {
+                            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                            resolve({
+                                url: downloadURL,
+                                path: path,
+                                name: file.name,
+                                size: file.size
+                            });
+                        } catch (error) {
+                            reject(error);
+                        }
+                    }
+                );
+            });
+        }
+
+        function deleteFileFromStorage(path) {
+            return storage.ref(path).delete().catch(() => {});
+        }
+
+        function generateFilePath(prefix, fileName) {
+            const timestamp = Date.now();
+            const random = Math.random().toString(36).substring(2, 8);
+            const ext = fileName.split('.').pop();
+            return `${prefix}/${timestamp}_${random}.${ext}`;
+        }
+
+        // ============================================================
+        // UPLOAD COMPONENTS - SECTION IMAGE
+        // ============================================================
+        function setupSectionImageUpload() {
+            const drop = document.getElementById('sectionImageDrop');
+            const input = document.getElementById('sectionImageInput');
+            const preview = document.getElementById('sectionImagePreview');
+            const previewImg = document.getElementById('sectionImagePreviewImg');
+            const urlInput = document.getElementById('sectionImageUrl');
+            const errorDiv = document.getElementById('sectionImageError');
+            const removeBtn = document.getElementById('sectionImageRemove');
+
+            let currentFile = null;
+            let isUploading = false;
+
+            function showError(msg) {
+                errorDiv.style.display = 'flex';
+                errorDiv.querySelector('span').textContent = msg;
+            }
+
+            function hideError() {
+                errorDiv.style.display = 'none';
+            }
+
+            function resetUpload() {
+                currentFile = null;
+                preview.style.display = 'none';
+                previewImg.src = '';
+                urlInput.value = '';
+                hideError();
+                drop.style.display = 'flex';
+                isUploading = false;
+                input.value = '';
+            }
+
+            async function handleFile(file) {
+                if (!file) return;
+
+                // Validate
+                if (!file.type.startsWith('image/')) {
+                    showError('يرجى اختيار ملف صورة صالح');
+                    return;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('حجم الصورة يتجاوز الحد المسموح (5MB)');
+                    return;
+                }
+
+                hideError();
+                isUploading = true;
+                drop.style.opacity = '0.5';
+                drop.style.cursor = 'default';
+
+                try {
+                    const user = auth.currentUser;
+                    if (!user) throw new Error('يجب تسجيل الدخول');
+
+                    const path = generateFilePath(`sections/${user.uid}/images`, file.name);
+                    const result = await uploadFileToStorage(file, path, (progress) => {
+                        drop.querySelector('p').textContent = `جاري الرفع... ${progress}%`;
+                    });
+
+                    // Show preview
+                    previewImg.src = result.url;
+                    preview.style.display = 'block';
+                    urlInput.value = result.url;
+                    drop.style.display = 'none';
+                    drop.querySelector('p').textContent = 'اسحب الصورة هنا أو انقر للاختيار';
+
+                    currentFile = result;
+                    showToast('تم رفع الصورة بنجاح!');
+                } catch (error) {
+                    showError(error.message || 'فشل في رفع الصورة');
+                } finally {
+                    isUploading = false;
+                    drop.style.opacity = '1';
+                    drop.style.cursor = 'pointer';
+                }
+            }
+
+            drop.addEventListener('click', () => input.click());
+
+            drop.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                drop.classList.add('drag-over');
+            });
+
+            drop.addEventListener('dragleave', () => {
+                drop.classList.remove('drag-over');
+            });
+
+            drop.addEventListener('drop', (e) => {
+                e.preventDefault();
+                drop.classList.remove('drag-over');
+                if (e.dataTransfer.files.length > 0) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            input.addEventListener('change', () => {
+                if (input.files.length > 0) {
+                    handleFile(input.files[0]);
+                }
+            });
+
+            removeBtn.addEventListener('click', () => {
+                resetUpload();
+                showToast('تم إزالة الصورة');
+            });
+
+            return {
+                getUrl: () => urlInput.value,
+                reset: resetUpload,
+                setUrl: (url) => {
+                    if (url) {
+                        previewImg.src = url;
+                        preview.style.display = 'block';
+                        urlInput.value = url;
+                        drop.style.display = 'none';
+                    }
+                }
+            };
+        }
+
+        // ============================================================
+        // UPLOAD COMPONENTS - LESSON VIDEO
+        // ============================================================
+        function setupLessonVideoUpload() {
+            const drop = document.getElementById('lessonVideoDrop');
+            const input = document.getElementById('lessonVideoInput');
+            const preview = document.getElementById('lessonVideoPreview');
+            const previewVideo = document.getElementById('lessonVideoPreviewVideo');
+            const urlInput = document.getElementById('lessonVideoUrl');
+            const errorDiv = document.getElementById('lessonVideoError');
+            const removeBtn = document.getElementById('lessonVideoRemove');
+
+            let currentFile = null;
+            let isUploading = false;
+
+            function showError(msg) {
+                errorDiv.style.display = 'flex';
+                errorDiv.querySelector('span').textContent = msg;
+            }
+
+            function hideError() {
+                errorDiv.style.display = 'none';
+            }
+
+            function resetUpload() {
+                currentFile = null;
+                preview.style.display = 'none';
+                previewVideo.src = '';
+                urlInput.value = '';
+                hideError();
+                drop.style.display = 'flex';
+                isUploading = false;
+                input.value = '';
+            }
+
+            async function handleFile(file) {
+                if (!file) return;
+
+                if (!file.type.startsWith('video/')) {
+                    showError('يرجى اختيار ملف فيديو صالح');
+                    return;
+                }
+                if (file.size > 100 * 1024 * 1024) {
+                    showError('حجم الفيديو يتجاوز الحد المسموح (100MB)');
+                    return;
+                }
+
+                hideError();
+                isUploading = true;
+                drop.style.opacity = '0.5';
+                drop.style.cursor = 'default';
+
+                try {
+                    const user = auth.currentUser;
+                    if (!user) throw new Error('يجب تسجيل الدخول');
+
+                    const path = generateFilePath(`lessons/${user.uid}/videos`, file.name);
+                    const result = await uploadFileToStorage(file, path, (progress) => {
+                        drop.querySelector('p').textContent = `جاري الرفع... ${progress}%`;
+                    });
+
+                    previewVideo.src = result.url;
+                    preview.style.display = 'block';
+                    urlInput.value = result.url;
+                    drop.style.display = 'none';
+                    drop.querySelector('p').textContent = 'اسحب الفيديو هنا أو انقر للاختيار';
+
+                    currentFile = result;
+                    showToast('تم رفع الفيديو بنجاح!');
+                } catch (error) {
+                    showError(error.message || 'فشل في رفع الفيديو');
+                } finally {
+                    isUploading = false;
+                    drop.style.opacity = '1';
+                    drop.style.cursor = 'pointer';
+                }
+            }
+
+            drop.addEventListener('click', () => input.click());
+
+            drop.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                drop.classList.add('drag-over');
+            });
+
+            drop.addEventListener('dragleave', () => {
+                drop.classList.remove('drag-over');
+            });
+
+            drop.addEventListener('drop', (e) => {
+                e.preventDefault();
+                drop.classList.remove('drag-over');
+                if (e.dataTransfer.files.length > 0) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            input.addEventListener('change', () => {
+                if (input.files.length > 0) {
+                    handleFile(input.files[0]);
+                }
+            });
+
+            removeBtn.addEventListener('click', () => {
+                resetUpload();
+                showToast('تم إزالة الفيديو');
+            });
+
+            return {
+                getUrl: () => urlInput.value,
+                reset: resetUpload,
+                setUrl: (url) => {
+                    if (url) {
+                        previewVideo.src = url;
+                        preview.style.display = 'block';
+                        urlInput.value = url;
+                        drop.style.display = 'none';
+                    }
+                }
+            };
+        }
+
+        // ============================================================
+        // UPLOAD COMPONENTS - LESSON THUMBNAIL
+        // ============================================================
+        function setupLessonThumbnailUpload() {
+            const drop = document.getElementById('lessonThumbnailDrop');
+            const input = document.getElementById('lessonThumbnailInput');
+            const preview = document.getElementById('lessonThumbnailPreview');
+            const previewImg = document.getElementById('lessonThumbnailPreviewImg');
+            const urlInput = document.getElementById('lessonThumbnailUrl');
+            const errorDiv = document.getElementById('lessonThumbnailError');
+            const removeBtn = document.getElementById('lessonThumbnailRemove');
+
+            let currentFile = null;
+            let isUploading = false;
+
+            function showError(msg) {
+                errorDiv.style.display = 'flex';
+                errorDiv.querySelector('span').textContent = msg;
+            }
+
+            function hideError() {
+                errorDiv.style.display = 'none';
+            }
+
+            function resetUpload() {
+                currentFile = null;
+                preview.style.display = 'none';
+                previewImg.src = '';
+                urlInput.value = '';
+                hideError();
+                drop.style.display = 'flex';
+                isUploading = false;
+                input.value = '';
+            }
+
+            async function handleFile(file) {
+                if (!file) return;
+
+                if (!file.type.startsWith('image/')) {
+                    showError('يرجى اختيار ملف صورة صالح');
+                    return;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('حجم الصورة يتجاوز الحد المسموح (5MB)');
+                    return;
+                }
+
+                hideError();
+                isUploading = true;
+                drop.style.opacity = '0.5';
+                drop.style.cursor = 'default';
+
+                try {
+                    const user = auth.currentUser;
+                    if (!user) throw new Error('يجب تسجيل الدخول');
+
+                    const path = generateFilePath(`lessons/${user.uid}/thumbnails`, file.name);
+                    const result = await uploadFileToStorage(file, path, (progress) => {
+                        drop.querySelector('p').textContent = `جاري الرفع... ${progress}%`;
+                    });
+
+                    previewImg.src = result.url;
+                    preview.style.display = 'block';
+                    urlInput.value = result.url;
+                    drop.style.display = 'none';
+                    drop.querySelector('p').textContent = 'اسحب الصورة هنا أو انقر للاختيار';
+
+                    currentFile = result;
+                    showToast('تم رفع الصورة المصغرة بنجاح!');
+                } catch (error) {
+                    showError(error.message || 'فشل في رفع الصورة');
+                } finally {
+                    isUploading = false;
+                    drop.style.opacity = '1';
+                    drop.style.cursor = 'pointer';
+                }
+            }
+
+            drop.addEventListener('click', () => input.click());
+
+            drop.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                drop.classList.add('drag-over');
+            });
+
+            drop.addEventListener('dragleave', () => {
+                drop.classList.remove('drag-over');
+            });
+
+            drop.addEventListener('drop', (e) => {
+                e.preventDefault();
+                drop.classList.remove('drag-over');
+                if (e.dataTransfer.files.length > 0) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            input.addEventListener('change', () => {
+                if (input.files.length > 0) {
+                    handleFile(input.files[0]);
+                }
+            });
+
+            removeBtn.addEventListener('click', () => {
+                resetUpload();
+                showToast('تم إزالة الصورة المصغرة');
+            });
+
+            return {
+                getUrl: () => urlInput.value,
+                reset: resetUpload,
+                setUrl: (url) => {
+                    if (url) {
+                        previewImg.src = url;
+                        preview.style.display = 'block';
+                        urlInput.value = url;
+                        drop.style.display = 'none';
+                    }
+                }
+            };
+        }
+
+        // ============================================================
+        // INIT UPLOAD COMPONENTS
+        // ============================================================
+        let sectionImageUpload;
+        let lessonVideoUpload;
+        let lessonThumbnailUpload;
+
+        function initUploadComponents() {
+            sectionImageUpload = setupSectionImageUpload();
+            lessonVideoUpload = setupLessonVideoUpload();
+            lessonThumbnailUpload = setupLessonThumbnailUpload();
+        }
 
         // ============================================================
         // DATA REFRESH
@@ -1761,15 +2377,20 @@
 
             return Promise.all([
                 db.ref('sections').once('value'),
-                db.ref('lessons').once('value')
-            ]).then(([sectionsSnap, lessonsSnap]) => {
+                db.ref('lessons').once('value'),
+                db.ref('users').once('value')
+            ]).then(([sectionsSnap, lessonsSnap, usersSnap]) => {
                 sections = sectionsSnap.val() || {};
                 lessons = lessonsSnap.val() || {};
+                appUsers = usersSnap.val() || {};
 
                 document.getElementById('sectionsLoading').style.display = 'none';
 
                 document.getElementById('statSectionsCount').textContent = Object.keys(sections).length;
                 document.getElementById('statLessonsCount').textContent = Object.keys(lessons).length;
+                document.getElementById('statUsers').textContent = '+' + Object.keys(appUsers).filter(u =>
+                    appUsers[u].role !== 'admin').length;
+                document.getElementById('statVideos').textContent = '+' + Object.keys(lessons).length;
 
                 renderSectionsGrid();
                 populateSectionSelect();
@@ -1791,7 +2412,7 @@
         }
 
         // ============================================================
-        // RENDER SECTIONS (بدون صور)
+        // RENDER SECTIONS
         // ============================================================
         function renderSectionsGrid(filterText) {
             const grid = document.getElementById('sectionsGrid');
@@ -1815,7 +2436,6 @@
             }
             emptyEl.style.display = 'none';
 
-            // أيقونات عشوائية للأقسام
             const icons = ['fa-solid fa-book', 'fa-solid fa-calculator', 'fa-solid fa-flask',
                 'fa-solid fa-globe', 'fa-solid fa-pencil', 'fa-solid fa-chart-simple',
                 'fa-solid fa-brain', 'fa-solid fa-microscope'
@@ -1829,8 +2449,14 @@
 
                 const icon = icons[idx % icons.length];
 
+                let imageHtml = '';
+                if (sec.image) {
+                    imageHtml = `<img src="${sec.image}" alt="${sec.name}" class="sec-image" loading="lazy" />`;
+                }
+
                 card.innerHTML = `
-                    <div class="sec-icon"><i class="${icon}"></i></div>
+                    ${imageHtml}
+                    ${!sec.image ? `<div class="sec-icon"><i class="${icon}"></i></div>` : ''}
                     <h3>${escapeHtml(sec.name || '')}</h3>
                     <div class="meta"><i class="fa-regular fa-circle-play"></i> ${count} درس</div>
                 `;
@@ -1866,7 +2492,7 @@
         });
 
         // ============================================================
-        // RENDER LESSONS (مع نظام الإعجاب المتطور)
+        // RENDER LESSONS
         // ============================================================
         function renderLessonsForSection(sectionId) {
             const list = document.getElementById('lessonsList');
@@ -1884,21 +2510,25 @@
             const user = auth.currentUser;
 
             items.forEach(([id, lesson]) => {
-                const vid = extractVideyId(lesson.videyUrl || lesson.url);
                 const card = document.createElement('div');
                 card.className = 'lesson-card';
-                const directVideoUrl = vid ? `https://cdn.videy.co/${vid}.mp4` : '';
 
-                // التحقق مما إذا كان المستخدم قد أعجب بهذا الدرس مسبقاً
                 const liked = user && lesson.likes && lesson.likes[user.uid] === true;
+
+                // استخدام صورة مصغرة من Firebase Storage أو صورة افتراضية
+                let thumbnailHtml = '';
+                if (lesson.thumbnail) {
+                    thumbnailHtml = `<img src="${lesson.thumbnail}" class="lesson-thumbnail" alt="${lesson.title}" />`;
+                }
 
                 card.innerHTML = `
                     <div class="lesson-video">
-                        ${vid ? `
-                            <video id="video-${id}" controls controlsList="nodownload" playsinline>
-                                <source src="${directVideoUrl}" type="video/mp4">
+                        ${thumbnailHtml}
+                        ${lesson.videoUrl ? `
+                            <video id="video-${id}" controls controlsList="nodownload" playsinline poster="${lesson.thumbnail || ''}">
+                                <source src="${lesson.videoUrl}" type="video/mp4">
                             </video>
-                        ` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;background:#1a1a2e;">⚠️ رابط الفيديو غير صالح</div>`}
+                        ` : `<div style="color:#fff;display:flex;align-items:center;justify-content:center;height:100%;position:absolute;inset:0;background:#1a1a2e;">⚠️ لا يوجد فيديو</div>`}
                     </div>
                     <div class="lesson-body">
                         <h3>${escapeHtml(lesson.title || '')}</h3>
@@ -1916,7 +2546,6 @@
                             <button class="play-btn" data-id="${id}"><i class="fa-solid fa-play"></i> تشغيل</button>
                         </div>
 
-                        <!-- المناقشات -->
                         <div class="discussion-box">
                             <div class="discussion-title"><i class="fa-solid fa-comments"></i> أسئلة ومناقشات</div>
                             <div class="comments-list" id="comments-list-${id}">
@@ -1933,7 +2562,7 @@
                 `;
                 list.appendChild(card);
 
-                // التحكم بالفيديو
+                // Video controls
                 const videoEl = document.getElementById(`video-${id}`);
                 const playBtn = card.querySelector('.play-btn');
 
@@ -1968,7 +2597,7 @@
         }
 
         // ============================================================
-        // LIKE SYSTEM (إعجاب واحد فقط لكل مستخدم)
+        // LIKE SYSTEM
         // ============================================================
         window.toggleLike = function(lessonId) {
             const user = auth.currentUser;
@@ -1979,18 +2608,15 @@
 
             const likeRef = db.ref('lessons/' + lessonId + '/likes/' + user.uid);
 
-            // قراءة القيمة الحالية لتحديد ما إذا كان المستخدم معجباً أم لا
             likeRef.once('value').then(snap => {
                 const isLiked = snap.val() === true;
 
                 if (isLiked) {
-                    // إلغاء الإعجاب
                     likeRef.remove().then(() => {
                         updateLikeUI(lessonId, false);
                         showToast('تم إلغاء الإعجاب');
                     });
                 } else {
-                    // إضافة إعجاب
                     likeRef.set(true).then(() => {
                         updateLikeUI(lessonId, true);
                         showToast('شكراً على إعجابك! ❤️');
@@ -2010,7 +2636,6 @@
                 btn.classList.toggle('liked', isLiked);
             }
 
-            // تحديث العدد من قاعدة البيانات
             db.ref('lessons/' + lessonId + '/likes').once('value').then(snap => {
                 const likes = snap.val() || {};
                 const count = Object.keys(likes).length;
@@ -2064,11 +2689,9 @@
                             </div>
                             <p class="comment-text">${escapeHtml(c.text)}</p>
                             ${canDelete ? `
-                                <div class="comment-actions">
-                                    <button class="comment-delete-btn" onclick="deleteComment('${lessonId}', '${commentId}')">
-                                        <i class="fa-solid fa-trash-can"></i> حذف
-                                    </button>
-                                </div>
+                                <button class="comment-delete-btn" onclick="deleteComment('${lessonId}', '${commentId}')">
+                                    <i class="fa-solid fa-trash-can"></i> حذف
+                                </button>
                             ` : ''}
                         </div>
                     `;
@@ -2146,7 +2769,6 @@
         document.getElementById('btnBlockedLogout').addEventListener('click', () => auth.signOut());
         document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
 
-        // تسجيل الدخول
         document.getElementById('btnSubmitLogin').addEventListener('click', () => {
             const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value;
@@ -2170,7 +2792,6 @@
                 });
         });
 
-        // إنشاء حساب
         document.getElementById('btnSubmitRegister').addEventListener('click', () => {
             const name = document.getElementById('regName').value.trim();
             const phone = document.getElementById('regPhone').value.trim();
@@ -2267,17 +2888,22 @@
             }
         });
 
-        function goToAdminView() { showView('adminView');
+        function goToAdminView() {
+            showView('adminView');
             renderAdminSections();
             renderAdminLessons();
-            renderAdminUsers(); }
+            renderAdminUsers();
+        }
 
-        function goToPublicView() { showView('sectionsView'); }
+        function goToPublicView() {
+            showView('sectionsView');
+        }
+
         document.getElementById('backToPublic').addEventListener('click', () => goToPublicView());
         document.getElementById('adminNavBtn').addEventListener('click', () => goToAdminView());
 
         // ============================================================
-        // ADMIN
+        // ADMIN - USERS
         // ============================================================
         function renderAdminUsers() {
             const wrap = document.getElementById('adminUsersList');
@@ -2337,24 +2963,43 @@
             });
         }
 
+        // ============================================================
+        // ADMIN - SECTIONS
+        // ============================================================
         document.getElementById('openAddSection').addEventListener('click', () => {
             document.getElementById('sectionModalTitle').textContent = 'إضافة قسم جديد';
             document.getElementById('sectionId').value = '';
             document.getElementById('sectionName').value = '';
+            if (sectionImageUpload) sectionImageUpload.reset();
             openModal('sectionModal');
         });
 
         document.getElementById('submitSection').addEventListener('click', () => {
             const id = document.getElementById('sectionId').value;
             const name = document.getElementById('sectionName').value.trim();
+            const image = sectionImageUpload ? sectionImageUpload.getUrl() : '';
 
             if (!name) { showFieldError('sectionModal', 'الرجاء إدخال اسم القسم'); return; }
-            const data = { name, createdAt: Date.now() };
+
+            const data = { name, image, updatedAt: Date.now() };
 
             if (id) {
-                db.ref('sections/' + id).update({ name }).then(() => { closeModal('sectionModal');
+                // حفظ الصورة القديمة للحذف إذا تغيرت
+                const oldSection = sections[id];
+                if (oldSection && oldSection.image && oldSection.image !== image) {
+                    // حذف الصورة القديمة من Firebase Storage
+                    const oldPath = oldSection.image;
+                    // استخراج المسار من الرابط
+                    const pathMatch = oldPath.match(/\/o\/(.+?)\?/);
+                    if (pathMatch) {
+                        const decodedPath = decodeURIComponent(pathMatch[1]);
+                        deleteFileFromStorage(decodedPath);
+                    }
+                }
+                db.ref('sections/' + id).update(data).then(() => { closeModal('sectionModal');
                     refreshData(); });
             } else {
+                data.createdAt = Date.now();
                 db.ref('sections').push(data).then(() => { closeModal('sectionModal');
                     refreshData(); });
             }
@@ -2364,10 +3009,14 @@
             const wrap = document.getElementById('adminSectionsList');
             wrap.innerHTML = '';
             Object.keys(sections).forEach(id => {
+                const sec = sections[id];
                 const row = document.createElement('div');
                 row.className = 'admin-row';
                 row.innerHTML = `
-                    <div class="info"><strong>${escapeHtml(sections[id].name)}</strong></div>
+                    <div class="info">
+                        <strong>${escapeHtml(sec.name)}</strong>
+                        ${sec.image ? `<small>🖼️ مع صورة</small>` : ''}
+                    </div>
                     <div class="actions">
                         <button class="btn btn-gray btn-sm edit-sec" data-id="${id}"><i class="fa-solid fa-pen"></i></button>
                         <button class="btn btn-danger btn-sm del-sec" data-id="${id}"><i class="fa-solid fa-trash"></i></button>
@@ -2378,8 +3027,13 @@
             wrap.querySelectorAll('.edit-sec').forEach(b => {
                 b.addEventListener('click', () => {
                     const secId = b.dataset.id;
+                    const sec = sections[secId];
                     document.getElementById('sectionId').value = secId;
-                    document.getElementById('sectionName').value = sections[secId].name;
+                    document.getElementById('sectionName').value = sec.name;
+                    if (sectionImageUpload) {
+                        sectionImageUpload.reset();
+                        if (sec.image) sectionImageUpload.setUrl(sec.image);
+                    }
                     openModal('sectionModal');
                 });
             });
@@ -2391,6 +3045,9 @@
             });
         }
 
+        // ============================================================
+        // ADMIN - LESSONS
+        // ============================================================
         function populateSectionSelect() {
             const select = document.getElementById('lessonSection');
             select.innerHTML = '';
@@ -2406,8 +3063,9 @@
             if (Object.keys(sections).length === 0) { showToast('أضف قسماً أولاً'); return; }
             document.getElementById('lessonId').value = '';
             document.getElementById('lessonTitle').value = '';
-            document.getElementById('lessonUrl').value = '';
             document.getElementById('lessonDesc').value = '';
+            if (lessonVideoUpload) lessonVideoUpload.reset();
+            if (lessonThumbnailUpload) lessonThumbnailUpload.reset();
             populateSectionSelect();
             openModal('lessonModal');
         });
@@ -2416,16 +3074,34 @@
             const id = document.getElementById('lessonId').value;
             const sectionId = document.getElementById('lessonSection').value;
             const title = document.getElementById('lessonTitle').value.trim();
-            const url = document.getElementById('lessonUrl').value.trim();
-            const desc = document.getElementById('lessonDesc').value.trim();
+            const description = document.getElementById('lessonDesc').value.trim();
+            const videoUrl = lessonVideoUpload ? lessonVideoUpload.getUrl() : '';
+            const thumbnail = lessonThumbnailUpload ? lessonThumbnailUpload.getUrl() : '';
 
-            if (!sectionId || !title || !url || !extractVideyId(url)) {
-                showFieldError('lessonModal', 'تحقق من الرابط والبيانات');
+            if (!sectionId || !title || !videoUrl) {
+                showFieldError('lessonModal', 'يرجى اختيار القسم، إدخال عنوان، ورفع فيديو');
                 return;
             }
-            const data = { sectionId, title, videyUrl: url, description: desc };
+
+            const data = { sectionId, title, description, videoUrl, thumbnail };
 
             if (id) {
+                // حذف الملفات القديمة إذا تغيرت
+                const oldLesson = lessons[id];
+                if (oldLesson) {
+                    if (oldLesson.videoUrl && oldLesson.videoUrl !== videoUrl) {
+                        const pathMatch = oldLesson.videoUrl.match(/\/o\/(.+?)\?/);
+                        if (pathMatch) {
+                            deleteFileFromStorage(decodeURIComponent(pathMatch[1]));
+                        }
+                    }
+                    if (oldLesson.thumbnail && oldLesson.thumbnail !== thumbnail) {
+                        const pathMatch = oldLesson.thumbnail.match(/\/o\/(.+?)\?/);
+                        if (pathMatch) {
+                            deleteFileFromStorage(decodeURIComponent(pathMatch[1]));
+                        }
+                    }
+                }
                 db.ref('lessons/' + id).update(data).then(() => { closeModal('lessonModal');
                     refreshData(); });
             } else {
@@ -2447,7 +3123,7 @@
                 row.innerHTML = `
                     <div class="info">
                         <strong>${escapeHtml(l.title)}</strong>
-                        <small>${l.views || 0} مشاهدة • ${likeCount} إعجاب</small>
+                        <small>${l.views || 0} مشاهدة • ${likeCount} إعجاب ${l.videoUrl ? '• ✅ فيديو' : '• ❌ بدون فيديو'}</small>
                     </div>
                     <div class="actions">
                         <button class="btn btn-gray btn-sm edit-les" data-id="${id}"><i class="fa-solid fa-pen"></i></button>
@@ -2463,8 +3139,15 @@
                     populateSectionSelect();
                     document.getElementById('lessonSection').value = l.sectionId;
                     document.getElementById('lessonTitle').value = l.title;
-                    document.getElementById('lessonUrl').value = l.videyUrl;
                     document.getElementById('lessonDesc').value = l.description;
+                    if (lessonVideoUpload) {
+                        lessonVideoUpload.reset();
+                        if (l.videoUrl) lessonVideoUpload.setUrl(l.videoUrl);
+                    }
+                    if (lessonThumbnailUpload) {
+                        lessonThumbnailUpload.reset();
+                        if (l.thumbnail) lessonThumbnailUpload.setUrl(l.thumbnail);
+                    }
                     openModal('lessonModal');
                 });
             });
@@ -2482,23 +3165,63 @@
         document.getElementById('cancelDelete').addEventListener('click', () => closeModal('confirmModal'));
         document.getElementById('confirmDelete').addEventListener('click', () => {
             if (!pendingDelete) return;
+
             if (pendingDelete.type === 'section') {
+                const sec = sections[pendingDelete.id];
+                if (sec && sec.image) {
+                    const pathMatch = sec.image.match(/\/o\/(.+?)\?/);
+                    if (pathMatch) {
+                        deleteFileFromStorage(decodeURIComponent(pathMatch[1]));
+                    }
+                }
+                // حذف الدروس التابعة مع ملفاتها
+                Object.entries(lessons).forEach(([lessonId, lesson]) => {
+                    if (lesson.sectionId === pendingDelete.id) {
+                        if (lesson.videoUrl) {
+                            const pathMatch = lesson.videoUrl.match(/\/o\/(.+?)\?/);
+                            if (pathMatch) deleteFileFromStorage(decodeURIComponent(pathMatch[1]));
+                        }
+                        if (lesson.thumbnail) {
+                            const pathMatch = lesson.thumbnail.match(/\/o\/(.+?)\?/);
+                            if (pathMatch) deleteFileFromStorage(decodeURIComponent(pathMatch[1]));
+                        }
+                        db.ref('lessons/' + lessonId).remove();
+                        db.ref('comments/' + lessonId).remove();
+                    }
+                });
                 db.ref('sections/' + pendingDelete.id).remove().then(() => refreshData());
             } else if (pendingDelete.type === 'lesson') {
-                db.ref('lessons/' + pendingDelete.id).remove().then(() => refreshData());
+                const lesson = lessons[pendingDelete.id];
+                if (lesson) {
+                    if (lesson.videoUrl) {
+                        const pathMatch = lesson.videoUrl.match(/\/o\/(.+?)\?/);
+                        if (pathMatch) deleteFileFromStorage(decodeURIComponent(pathMatch[1]));
+                    }
+                    if (lesson.thumbnail) {
+                        const pathMatch = lesson.thumbnail.match(/\/o\/(.+?)\?/);
+                        if (pathMatch) deleteFileFromStorage(decodeURIComponent(pathMatch[1]));
+                    }
+                }
+                db.ref('lessons/' + pendingDelete.id).remove();
+                db.ref('comments/' + pendingDelete.id).remove();
+                refreshData();
             } else if (pendingDelete.type === 'user') {
                 db.ref('users/' + pendingDelete.id).remove().then(() => renderAdminUsers());
             }
             closeModal('confirmModal');
+            pendingDelete = null;
         });
 
+        // ============================================================
+        // INIT
+        // ============================================================
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // ============================================================
-        // START: عرض الصفحة الافتراضي (عند تحميل الصفحة بدون مستخدم)
-        // ============================================================
-        // في حال عدم وجود مستخدم، تظهر landingView
-        // onAuthStateChanged يتولى ذلك
+        // تهيئة مكونات الرفع
+        initUploadComponents();
+
+        // بدء التطبيق - landing view بشكل افتراضي
+        showView('landingView');
     </script>
 
 </body>
